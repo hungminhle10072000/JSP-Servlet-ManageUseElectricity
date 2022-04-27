@@ -20,7 +20,6 @@
         <mapping class="com.hdh.models.Contract"/>
         <mapping class="com.hdh.models.ElectricMeter"/>
         <mapping class="com.hdh.models.NoteBook"/>
-        <mapping class="com.hdh.models.ElectricMeter_NoteBook"/>
         <mapping class="com.hdh.models.Invoice"/>
     </session-factory>
 </hibernate-configuration>

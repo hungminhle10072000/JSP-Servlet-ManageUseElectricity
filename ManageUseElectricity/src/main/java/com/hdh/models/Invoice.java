@@ -21,8 +21,8 @@ public class Invoice {
 
     private Double totalIndex;
 
-    @ManyToOne
-    @JoinColumn(name = "id_notebook", nullable = false)
+    @OneToOne
+    @JoinColumn(name = "notebook_id", nullable = false)
     private NoteBook noteBook;
 
 }

@@ -3,6 +3,7 @@ package com.hdh.models;
 import lombok.Data;
 
 import javax.persistence.*;
+import java.util.Date;
 import java.util.List;
 
 @Data
@@ -14,12 +15,15 @@ public class NoteBook {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
-    @Column(unique = true)
-    private String name;
 
-    @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL, mappedBy = "noteBook")
-    List<ElectricMeter_NoteBook> electricMeter_noteBookList;
+    @Column(nullable = false)
+    private Double indexElectric;
 
-    @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL, mappedBy = "noteBook")
-    List<Invoice> invoiceList;
+    @Column(nullable = false)
+    private Date dateWrite;
+
+    @ManyToOne
+    @JoinColumn(name = "electric_id", nullable = false)
+    private ElectricMeter electricMeter;
+
 }

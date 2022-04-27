@@ -22,6 +22,6 @@ public class ElectricMeter {
     private Contract contract;
 
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "electricMeter", cascade = CascadeType.ALL)
-    private List<ElectricMeter_NoteBook> electricMeter_noteBookList;
+    private List<NoteBook> noteBookList;
 
 }

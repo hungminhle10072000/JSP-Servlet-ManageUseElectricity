@@ -3,12 +3,14 @@
 <head>
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Sidebar Menu</title>
+    <title>Dashboard</title>
     <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/font-awesome.min.css"/>
     <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/css_home_page.css">
 </head>
 
 <body>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script src="${pageContext.request.contextPath}/resources/js/js_home_page.js"></script></body>
     <nav>
         <div class="sidebar-top">
           <span class="shrink-btn">
@@ -25,7 +27,6 @@
 
         <div class="sidebar-links" style="margin-top: 1rem">
             <ul>
-                <div class="active-tab"></div>
                 <li class="tooltip-element" data-tooltip="0">
                     <a href="#" class="active" data-active="0">
                         <div class="icon">
@@ -36,7 +37,7 @@
                     </a>
                 </li>
                 <li class="tooltip-element" data-tooltip="1">
-                    <a href="#" data-active="1">
+                    <a href="${pageContext.request.contextPath}/views/view_branch/manage_branch_page.jsp" data-active="1">
                         <div class="icon">
                             <i class='bx bx-folder'></i>
                             <i class='bx bxs-folder'></i>
@@ -95,15 +96,6 @@
                             <i class='bx bx-bar-chart-square'></i>
                             <i class='bx bxs-bar-chart-square'></i>
                         </div>
-                        <span class="link hide">Manage Electric_NoteBook</span>
-                    </a>
-                </li>
-                <li class="tooltip-element" data-tooltip="8">
-                    <a href="#" data-active="8">
-                        <div class="icon">
-                            <i class='bx bx-bar-chart-square'></i>
-                            <i class='bx bxs-bar-chart-square'></i>
-                        </div>
                         <span class="link hide">Manage Invoice</span>
                     </a>
                 </li>
@@ -128,20 +120,14 @@
                         <h5>Admin</h5>
                     </div>
                 </div>
-                <a href="#" class="log-out">
+                <a href="${pageContext.request.contextPath}/views/login.jsp" class="log-out">
                     <i class="fa fa-sign-out" aria-hidden="true"></i>
                 </a>
             </div>
-            <div class="tooltip">
-                <span class="show">John Doe</span>
-                <span>Logout</span>
-            </div>
         </div>
     </nav>
-
-
     <main>
-        <h1 class="banner">Power Usage Management</h1>
+        <h1 class="banner">Manage Branch</h1>
         <table class="table table-striped">
             <thead>
             <tr>
@@ -173,8 +159,4 @@
             </tbody>
         </table>
     </main>
-
-<script src="${pageContext.request.contextPath}/resources/js/js_home_page.js"></script>
-</body>
-
 </html>

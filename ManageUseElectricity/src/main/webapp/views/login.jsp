@@ -1,3 +1,4 @@
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%--
   Created by IntelliJ IDEA.
   User: hduonghung
@@ -13,20 +14,21 @@
     <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/font-awesome.min.css"/>
 </head>
 <body>
-<script type="text/javascript" src="${pageContext.request.contextPath}/resources/js/JsLoginPage.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 <div class="wrapper">
     <form class="login">
         <p class="title">Log in</p>
-        <input type="text" placeholder="Username" autofocus/>
+        <input type="text" placeholder="Username" autofocus class="text-username"/>
         <i class="fa fa-user"></i>
-        <input type="password" placeholder="Password"/>
+        <input type="password" placeholder="Password" class="text-password"/>
         <i class="fa fa-key"></i>
         <button>
             <i class="spinner"></i>
-            <span class="state">Log in</span>
+            <span class="state" urlBase="${pageContext.request.contextPath}">Log in</span>
         </button>
     </form>
     </p>
 </div>
+<script type="text/javascript" src="${pageContext.request.contextPath}/resources/js/JsLoginPage.js"></script>
 </body>
 </html>
