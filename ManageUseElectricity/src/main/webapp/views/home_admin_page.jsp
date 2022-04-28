@@ -10,7 +10,6 @@
 
 <body>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-<script src="${pageContext.request.contextPath}/resources/js/js_home_page.js"></script></body>
     <nav>
         <div class="sidebar-top">
           <span class="shrink-btn">
@@ -37,7 +36,7 @@
                     </a>
                 </li>
                 <li class="tooltip-element" data-tooltip="1">
-                    <a href="${pageContext.request.contextPath}/views/view_branch/manage_branch_page.jsp" data-active="1">
+                    <a href="${pageContext.request.contextPath}/branchController" data-active="1">
                         <div class="icon">
                             <i class='bx bx-folder'></i>
                             <i class='bx bxs-folder'></i>
@@ -55,7 +54,7 @@
                     </a>
                 </li>
                 <li class="tooltip-element" data-tooltip="3">
-                    <a href="#" data-active="3">
+                    <a href="${pageContext.request.contextPath}/FormUseController" data-active="3">
                         <div class="icon">
                             <i class='bx bx-bar-chart-square'></i>
                             <i class='bx bxs-bar-chart-square'></i>
@@ -127,36 +126,8 @@
         </div>
     </nav>
     <main>
-        <h1 class="banner">Manage Branch</h1>
-        <table class="table table-striped">
-            <thead>
-            <tr>
-                <th scope="col">#</th>
-                <th scope="col">First</th>
-                <th scope="col">Last</th>
-                <th scope="col">Handle</th>
-            </tr>
-            </thead>
-            <tbody>
-            <tr>
-                <th scope="row">1</th>
-                <td>Mark</td>
-                <td>Otto</td>
-                <td>@mdo</td>
-            </tr>
-            <tr>
-                <th scope="row">2</th>
-                <td>Jacob</td>
-                <td>Thornton</td>
-                <td>@fat</td>
-            </tr>
-            <tr>
-                <th scope="row">3</th>
-                <td>Larry</td>
-                <td>the Bird</td>
-                <td>@twitter</td>
-            </tr>
-            </tbody>
-        </table>
+        <h1 class="banner">Manage Use Electricity</h1>
     </main>
+<script src="${pageContext.request.contextPath}/resources/js/js_home_page.js"></script>
+</body>
 </html>

@@ -44,17 +44,17 @@ function changeLink() {
 
 sidebar_links.forEach((link) => link.addEventListener("click", changeLink));
 
-function showTooltip() {
-    let tooltip = this.parentNode.lastElementChild;
-    let spans = tooltip.children;
-    let tooltipIndex = this.dataset.tooltip;
+// function showTooltip() {
+//     let tooltip = this.parentNode.lastElementChild;
+//     let spans = tooltip.children;
+//     let tooltipIndex = this.dataset.tooltip;
+//
+//     Array.from(spans).forEach((sp) => sp.classList.remove("show"));
+//     spans[tooltipIndex].classList.add("show");
+//
+//     tooltip.style.top = `${(100 / (spans.length * 2)) * (tooltipIndex * 2 + 1)}%`;
+// }
 
-    Array.from(spans).forEach((sp) => sp.classList.remove("show"));
-    spans[tooltipIndex].classList.add("show");
-
-    tooltip.style.top = `${(100 / (spans.length * 2)) * (tooltipIndex * 2 + 1)}%`;
-}
-
-tooltip_elements.forEach((elem) => {
-    elem.addEventListener("mouseover", showTooltip);
-});
+// tooltip_elements.forEach((elem) => {
+//     elem.addEventListener("mouseover", showTooltip);
+// });
