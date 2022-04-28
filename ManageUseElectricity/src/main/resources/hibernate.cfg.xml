@@ -21,5 +21,7 @@
         <mapping class="com.hdh.models.ElectricMeter"/>
         <mapping class="com.hdh.models.NoteBook"/>
         <mapping class="com.hdh.models.Invoice"/>
+        <mapping class="com.hdh.models.HouseHold"/>
+        <mapping class="com.hdh.models.Business"/>
     </session-factory>
 </hibernate-configuration>
