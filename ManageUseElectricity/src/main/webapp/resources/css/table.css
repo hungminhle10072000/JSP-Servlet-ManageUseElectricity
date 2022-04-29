@@ -25,6 +25,34 @@
     color: white;
 }
 
+
+.table-custom {
+    font-family: Arial, Helvetica, sans-serif;
+    border-collapse: collapse;
+    width: 100%;
+}
+
+.table-custom td, .table-custom th {
+    border: 1px solid #ddd;
+    padding: 8px;
+}
+
+.table-custom tr:nth-child(even) {
+    background-color: #f2f2f2;
+}
+
+.table-custom tr:hover {
+    background-color: #ddd;
+}
+
+.table-custom th {
+    padding-top: 12px;
+    padding-bottom: 12px;
+    text-align: left;
+    background-color: #04AA6D;
+    color: white;
+}
+
 .button-update {
     background-color: #e0a800;
     border: none;
@@ -100,6 +128,59 @@
     color: white;
 }
 
+
+.button-switch-house {
+    background-color: #5bc0de;
+    border: none;
+    color: white;
+    padding: 9px 25px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    margin: 4px 2px;
+    transition-duration: 0.4s;
+    cursor: pointer;
+}
+
+.button-switch-house {
+    background-color: white;
+    color: black;
+    border: 2px solid #5bc0de;
+}
+
+.button-switch-house-choose {
+    background-color: #5bc0de;
+    color: white;
+}
+
+
+.button-switch-business {
+    background-color: #e0a800;
+    border: none;
+    color: white;
+    padding: 9px 25px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    margin: 4px 2px;
+    transition-duration: 0.4s;
+    cursor: pointer;
+}
+
+.button-switch-business {
+    background-color: white;
+    color: black;
+    border: 2px solid #e0a800;
+}
+
+.button-switch-business-choose {
+    background-color: #e0a800;
+    color: white;
+}
+
+
 #searchBar {
     height: 3rem !important;
     width: 130px;
@@ -120,4 +201,17 @@
 /* When the input field gets focus, change its width to 100% */
 #searchBar:focus {
     width: 100%;
+}
+
+td.td-unit-price {
+    padding: 0;
+    position: relative;
+    height: 1rem;
+}
+
+input.input-value-unit-price {
+    position: relative;
+    width: 100% !important;
+    height: 100% !important;
+    font-size: 1rem;
 }

@@ -1,6 +1,9 @@
 package com.hdh.daos;
 
-import com.hdh.models.Branch;
+import com.hdh.models.Business;
+import com.hdh.models.Customer;
+import com.hdh.models.FormUse;
+import com.hdh.models.HouseHold;
 import com.hdh.utils.HibernateUtil;
 import org.hibernate.Criteria;
 import org.hibernate.HibernateException;
@@ -10,16 +13,16 @@ import org.hibernate.Transaction;
 import java.util.ArrayList;
 import java.util.List;
 
-public class BranchDao {
+public class CustomerDao {
 
-    public List<Branch> getllListBranchs() {
-        List<Branch> listBranchResult = new ArrayList<>();
+    public List<Customer> getAllCustomer() {
+        List<Customer> customerList = new ArrayList<>();
         Session session = HibernateUtil.getSessionFactory().openSession();
         Transaction transaction = null;
         try {
             transaction = session.beginTransaction();
-            Criteria branchCriteria = session.createCriteria(Branch.class);
-            listBranchResult = branchCriteria.list();
+            Criteria formUseCriteria = session.createCriteria(Customer.class);
+            customerList = formUseCriteria.list();
             transaction.commit();
         } catch (HibernateException e) {
             if (transaction != null) transaction.rollback();
@@ -27,21 +30,18 @@ public class BranchDao {
         } finally {
             session.close();
         }
-        return listBranchResult;
+        return customerList;
     }
 
-    public void deleteBranch(Integer id) {
+    public boolean addBusinessCustomer(Business business) {
+        boolean checkAdd = false;
         Session session = HibernateUtil.getSessionFactory().openSession();
         Transaction transaction = null;
         try {
             transaction = session.beginTransaction();
-
-            Branch branchDelete = session.get(Branch.class, id);
-            if (branchDelete != null) {
-                session.delete(branchDelete);
-                System.out.println("Delete branch success !!!");
-            }
+            session.save(business);
             transaction.commit();
+            checkAdd = true;
 
         } catch (HibernateException e) {
             if (transaction != null) transaction.rollback();
@@ -49,39 +49,63 @@ public class BranchDao {
         } finally {
             session.close();
         }
+        return checkAdd;
     }
 
-    public void updateBranch(Branch branch) {
+    public boolean addHouseHoldCustomer(HouseHold houseHold) {
+        boolean checkAdd = false;
         Session session = HibernateUtil.getSessionFactory().openSession();
         Transaction transaction = null;
         try {
+
             transaction = session.beginTransaction();
-            session.update(branch);
+            session.save(houseHold);
             transaction.commit();
+            checkAdd = true;
+
         } catch (HibernateException e) {
             if (transaction != null) transaction.rollback();
             e.printStackTrace();
         } finally {
             session.close();
         }
+        return checkAdd;
     }
 
-    public Branch addBranch(Branch branch) {
+    public List<Business> getAllBusiness() {
+        List<Business> businessList = null;
         Session session = HibernateUtil.getSessionFactory().openSession();
         Transaction transaction = null;
-        Branch resultBranchAdd = null;
         try {
             transaction = session.beginTransaction();
-            Integer idBranchAdd = (Integer) session.save(branch);
+            Criteria criteria = session.createCriteria(Business.class);
+            businessList = criteria.list();
             transaction.commit();
-            resultBranchAdd = session.get(Branch.class, idBranchAdd);
         } catch (HibernateException e) {
             if (transaction != null) transaction.rollback();
             e.printStackTrace();
         } finally {
             session.close();
         }
-        return resultBranchAdd;
+        return businessList;
+    }
+
+    public boolean updateBusinessCustomer(Business business) {
+        boolean checkUpdate = false;
+        Session session = HibernateUtil.getSessionFactory().openSession();
+        Transaction transaction = null;
+        try {
+            transaction = session.beginTransaction();
+            session.update(business);
+            transaction.commit();
+            checkUpdate = true;
+        } catch (HibernateException e) {
+            if (transaction != null) transaction.rollback();
+            e.printStackTrace();
+        } finally {
+            session.close();
+        }
+        return checkUpdate;
     }
 
 }

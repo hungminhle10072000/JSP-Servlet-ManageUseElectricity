@@ -43,9 +43,11 @@ public class BranchController extends HttpServlet {
         JsonObject json = new JsonObject();
 
         if (branchResult == null) {
+            response.setStatus(400);
             json.addProperty("Alert", "Failed");
             out.print(json);
         } else {
+            response.setStatus(201);
             String branchJsonString = gson.toJson(branchResult);
             out.print(branchJsonString);
             out.flush();
@@ -62,9 +64,11 @@ public class BranchController extends HttpServlet {
         try {
             Integer idDelete = Integer.parseInt(req.getReader().readLine());
             branchService.deleteBranch(idDelete);
+            resp.setStatus(201);
             json.addProperty("Alert", "Success");
             out.print(json);
         } catch (Exception e) {
+            resp.setStatus(400);
             json.addProperty("Alert", "Failed");
             out.print(json);
         }
@@ -84,9 +88,11 @@ public class BranchController extends HttpServlet {
         JsonObject json = new JsonObject();
         try {
             branchService.updateBranch(branchUpdate);
+            resp.setStatus(201);
             json.addProperty("Alert", "Success");
             out.print(json);
         } catch (Exception e) {
+            resp.setStatus(400);
             json.addProperty("Alert", "Failed");
             out.print(json);
         }

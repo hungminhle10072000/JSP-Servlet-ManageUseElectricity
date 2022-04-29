@@ -42,7 +42,7 @@
                         <i class='bx bx-folder'></i>
                         <i class='bx bxs-folder'></i>
                     </div>
-                    <span class="link hide">Go back</span>
+                    <span class="link hide">Go Back</span>
                 </a>
             </li>
         </ul>

@@ -45,7 +45,7 @@
                     </a>
                 </li>
                 <li class="tooltip-element" data-tooltip="2">
-                    <a href="#" data-active="2">
+                    <a href="${pageContext.request.contextPath}/CustomerController" data-active="2">
                         <div class="icon">
                             <i class='bx bx-message-square-detail'></i>
                             <i class='bx bxs-message-square-detail'></i>
