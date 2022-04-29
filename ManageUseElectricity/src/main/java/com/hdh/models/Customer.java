@@ -7,6 +7,7 @@ import javax.persistence.*;
 @Data
 @Entity
 @Table
+@Inheritance(strategy = InheritanceType.JOINED)
 public class Customer {
 
     @Id

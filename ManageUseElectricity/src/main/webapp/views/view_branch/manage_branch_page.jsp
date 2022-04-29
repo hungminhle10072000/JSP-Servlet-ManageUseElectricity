@@ -8,8 +8,6 @@
     <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/font-awesome.min.css"/>
     <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/css_home_page.css"/>
     <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/table.css"/>
-    <%--    <link rel="stylesheet"--%>
-    <%--          href="${pageContext.request.contextPath}/resources_new/bootstrap-4.6.0-dist/css/bootstrap.css"/>--%>
 </head>
 <body>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
@@ -82,9 +80,9 @@
                 <th></th>
             </tr>
             <c:choose>
-                <c:when test="${branchList.size() == 0}">
-                    <h2>NO DATA</h2>
-                </c:when>
+<%--                <c:when test="${branchList.size() == 0}">--%>
+<%--                    <h2>NO DATA</h2>--%>
+<%--                </c:when>--%>
                 <c:when test="${branchList.size() > 0}">
                     <c:forEach items="${branchList}" var="branch">
                         <tr>
@@ -243,6 +241,5 @@
         })
     })
 </script>
-<%--<script src="${pageContext.request.contextPath}/resources_new/bootstrap-4.6.0-dist/js/bootstrap.min.js"></script>--%>
 </body>
 </html>
