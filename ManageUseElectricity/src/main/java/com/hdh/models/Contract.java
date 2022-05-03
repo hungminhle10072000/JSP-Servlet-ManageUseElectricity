@@ -30,10 +30,10 @@ public class Contract {
     private FormUse formUse;
 
     @OneToOne
-    @JoinColumn(name = "customer_id", nullable = false)
+    @JoinColumn(name = "customer_id", nullable = false, unique = true)
     private Customer customer;
 
-    @OneToOne(mappedBy = "contract", cascade = CascadeType.ALL)
-    @Cascade({org.hibernate.annotations.CascadeType.SAVE_UPDATE, org.hibernate.annotations.CascadeType.DELETE})
+    @OneToOne(mappedBy = "contract", cascade = CascadeType.REMOVE)
+//    @Cascade({org.hibernate.annotations.CascadeType.SAVE_UPDATE, org.hibernate.annotations.CascadeType.DELETE})
     private ElectricMeter electricMeter;
 }

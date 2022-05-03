@@ -57,18 +57,18 @@ public class ContractDao {
 
         try {
             transaction = session.beginTransaction();
-            String hql = "DELETE FROM Contract As u WHERE u.id = :id ";
-            Query query = session.createQuery(hql);
-            query.setParameter("id", id);
-            int result = query.executeUpdate();
-            checkDelete = true;
-//            Contract contractDelete = session.get(Contract.class, id);
-//            if (contractDelete != null) {
-//                session.delete(contractDelete);
-//                System.out.println("Delete contract success !!!");
+//            String hql = "DELETE FROM Contract As u WHERE u.id = :id ";
+//            Query query = session.createQuery(hql);
+//            query.setParameter("id", id);
+//            int result = query.executeUpdate();
 //            checkDelete = true;
-//            }
+            Contract contractDelete = session.get(Contract.class, id);
+            if (contractDelete != null) {
+                session.delete(contractDelete);
+                System.out.println("Delete contract success !!!");
+            }
             transaction.commit();
+            checkDelete = true;
         } catch (HibernateException e) {
             if (transaction != null) transaction.rollback();
             e.printStackTrace();

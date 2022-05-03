@@ -22,8 +22,8 @@ public class Customer {
 
     private String phoneNumber;
 
-    @OneToOne(mappedBy = "customer", cascade = CascadeType.ALL)
-    @Cascade({org.hibernate.annotations.CascadeType.SAVE_UPDATE, org.hibernate.annotations.CascadeType.DELETE})
+    @OneToOne(mappedBy = "customer", cascade = CascadeType.REMOVE)
+//    @Cascade({org.hibernate.annotations.CascadeType.SAVE_UPDATE, org.hibernate.annotations.CascadeType.DELETE})
     private Contract contract;
 
 }
