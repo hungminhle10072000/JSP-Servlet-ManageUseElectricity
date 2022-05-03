@@ -37,7 +37,7 @@
                 </a>
             </li>
             <li class="tooltip-element" data-tooltip="1">
-                <a href="#" data-active="1">
+                <a href="${pageContext.request.contextPath}/HouseHoldController" data-active="1">
                     <div class="icon">
                         <i class='bx bx-folder'></i>
                         <i class='bx bxs-folder'></i>
@@ -134,8 +134,12 @@
                                                              step="any"
                                                              value="${business.getTaxCode()}" min="0"/></td>
                             <td>
-                                <button class="button-update btn-update-business" id-business-update="${business.getId()}">Update</button>
-                                <button class="button-delete">Delete</button>
+                                <button class="button-update btn-update-business"
+                                        id-business-update="${business.getId()}">Update
+                                </button>
+                                <button class="button-delete btn-delete-business"
+                                        id-business-delete="${business.getId()}">Delete
+                                </button>
                             </td>
                         </tr>
                     </c:forEach>
@@ -149,8 +153,32 @@
 
     $(document).ready(function () {
 
+        $("#customers").on('click', '.btn-delete-business', function () {
 
-        $("#customers").on('click', '.btn-update-business' ,function () {
+            let currentRow = $(this).closest("tr");
+            let checkConfirm = confirm("Are you sure you want to delete !!!");
+            let idDelete = $(this).attr("id-business-delete");
+            if (checkConfirm) {
+                $.ajax({
+                    type: "DELETE",
+                    url: '${pageContext.request.contextPath}/BusinessCustomerController',
+                    contentType: 'application/json',
+                    data: idDelete,
+                    dataType: 'json',
+                    success: function (data) {
+                        alert("Delete success");
+                        currentRow.remove();
+                    },
+                    error: function (data) {
+                        alert("Delete failed");
+                        window.scrollTo({top: 0, behavior: 'smooth'});
+                    }
+                })
+            }
+        })
+
+
+        $("#customers").on('click', '.btn-update-business', function () {
             let currentRow = $(this).closest('tr');
             let idUpdate = $(this).attr('id-business-update');
             let address = currentRow.find("td:eq(1)").text().trim();
@@ -163,7 +191,7 @@
                 alert("Request enter name !!!!");
                 return;
             }
-            let phoneNumber = currentRow.find("td:eq(2) input[type='number']").val();
+            let phoneNumber = currentRow.find("td:eq(3) input[type='number']").val();
             if (phoneNumber == "") {
                 alert("Request enter Phone Number !!!");
                 return;
@@ -172,13 +200,9 @@
                 alert("Request re-enter Phone Number !!!");
                 return;
             }
-            let taxCode = currentRow.find("td:eq(3) input[type='number']").val();
+            let taxCode = currentRow.find("td:eq(4) input[type='number']").val();
             if (taxCode == "") {
                 alert("Request enter Tax Code !!!");
-                return;
-            }
-            if (Number(taxCode) < 0) {
-                alert("Request re-enter Tax Code !!!");
                 return;
             }
 

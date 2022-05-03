@@ -29,4 +29,8 @@ public class BranchService {
         return branchDao.addBranch(branchAdd);
     }
 
+    public Branch findBranchById(Integer id){
+        return branchDao.findBranchById(id);
+    }
+
 }

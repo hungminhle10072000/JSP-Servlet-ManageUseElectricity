@@ -1,12 +1,14 @@
 package com.hdh.daos;
 
 
+import com.hdh.models.Customer;
 import com.hdh.models.FormUse;
 import com.hdh.utils.HibernateUtil;
 import org.hibernate.Criteria;
 import org.hibernate.HibernateException;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
+import org.hibernate.query.Query;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -85,5 +87,25 @@ public class FormUseDao {
             session.close();
         }
         return checkResult;
+    }
+
+    public FormUse findFormUseById(Integer id) {
+        FormUse formUse;
+        Session session = HibernateUtil.getSessionFactory().openSession();
+        Transaction transaction = null;
+        try {
+            transaction = session.beginTransaction();
+            Query query = session.createQuery("from FormUse where id = :id");
+            query.setParameter("id", id);
+            formUse = (FormUse) query.uniqueResult();
+            transaction.commit();
+            return formUse;
+        } catch (HibernateException e) {
+            if (transaction != null) transaction.rollback();
+            e.printStackTrace();
+            return null;
+        } finally {
+            session.close();
+        }
     }
 }

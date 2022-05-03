@@ -1,14 +1,13 @@
 package com.hdh.daos;
 
-import com.hdh.models.Business;
-import com.hdh.models.Customer;
-import com.hdh.models.FormUse;
-import com.hdh.models.HouseHold;
+import com.hdh.models.*;
 import com.hdh.utils.HibernateUtil;
 import org.hibernate.Criteria;
 import org.hibernate.HibernateException;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
+import org.hibernate.criterion.Restrictions;
+import org.hibernate.query.Query;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -106,6 +105,116 @@ public class CustomerDao {
             session.close();
         }
         return checkUpdate;
+    }
+
+    public Customer findCustomerById(Long id) {
+        Customer customer;
+        Session session = HibernateUtil.getSessionFactory().openSession();
+        Transaction transaction = null;
+        try {
+            transaction = session.beginTransaction();
+            Query query = session.createQuery("from Customer where id = :id");
+            query.setParameter("id", id);
+            customer = (Customer) query.uniqueResult();
+            transaction.commit();
+            return customer;
+        } catch (HibernateException e) {
+            if (transaction != null) transaction.rollback();
+            e.printStackTrace();
+            return null;
+        } finally {
+            session.close();
+        }
+    }
+
+    public boolean updateHouseHoldCustomer(HouseHold houseHold) {
+        boolean checkUpdate = false;
+        Session session = HibernateUtil.getSessionFactory().openSession();
+        Transaction transaction = null;
+        try {
+            transaction = session.beginTransaction();
+            session.update(houseHold);
+            transaction.commit();
+            checkUpdate = true;
+        } catch (HibernateException e) {
+            if (transaction != null) transaction.rollback();
+            e.printStackTrace();
+        } finally {
+            session.close();
+        }
+        return checkUpdate;
+    }
+
+    public boolean deleteBusinessCustomer(Long idBusiness) {
+
+        boolean checkDelete = false;
+
+        Session session = HibernateUtil.getSessionFactory().openSession();
+        Transaction transaction = null;
+        try {
+            transaction = session.beginTransaction();
+            Criteria businessCriteria = session.createCriteria(Business.class);
+            businessCriteria.add(Restrictions.eq("id", idBusiness));
+            Business businessDelete;
+            if (businessCriteria.list().size() > 0) {
+                businessDelete = (Business) businessCriteria.list().get(0);
+                session.delete(businessDelete);
+                System.out.println("Delete business customer success !!!");
+                transaction.commit();
+                checkDelete = true;
+            }
+        } catch (HibernateException e) {
+            if (transaction != null) transaction.rollback();
+            e.printStackTrace();
+        } finally {
+            session.close();
+        }
+        return checkDelete;
+    }
+
+    public List<HouseHold> getAllHouseHoldCustomer() {
+        List<HouseHold> houseHoldList = null;
+        Session session = HibernateUtil.getSessionFactory().openSession();
+        Transaction transaction = null;
+        try {
+            transaction = session.beginTransaction();
+            Criteria criteria = session.createCriteria(HouseHold.class);
+            houseHoldList = criteria.list();
+            transaction.commit();
+        } catch (HibernateException e) {
+            if (transaction != null) transaction.rollback();
+            e.printStackTrace();
+        } finally {
+            session.close();
+        }
+        return houseHoldList;
+    }
+
+    public boolean deleteHouseHoldCustomer(Long idDelete) {
+
+        boolean checkDelete = false;
+
+        Session session = HibernateUtil.getSessionFactory().openSession();
+        Transaction transaction = null;
+        try {
+            transaction = session.beginTransaction();
+            Criteria criteria = session.createCriteria(HouseHold.class);
+            criteria.add(Restrictions.eq("id", idDelete));
+            HouseHold houseHoldDelete;
+            if (criteria.list().size() > 0) {
+                houseHoldDelete = (HouseHold) criteria.list().get(0);
+                session.delete(houseHoldDelete);
+                System.out.println("Delete household customer success !!!");
+                transaction.commit();
+                checkDelete = true;
+            }
+        } catch (HibernateException e) {
+            if (transaction != null) transaction.rollback();
+            e.printStackTrace();
+        } finally {
+            session.close();
+        }
+        return checkDelete;
     }
 
 }

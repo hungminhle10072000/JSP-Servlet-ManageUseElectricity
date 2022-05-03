@@ -7,6 +7,7 @@
         <entry key="file://$PROJECT_DIR$/src/main/webapp/views/login.jsp" value="file://$PROJECT_DIR$/src/main/webapp/views" />
         <entry key="file://$PROJECT_DIR$/src/main/webapp/views/slide-bar.jsp" value="file://$PROJECT_DIR$/src/main/webapp/views" />
         <entry key="file://$PROJECT_DIR$/src/main/webapp/views/view_branch/manage_branch_page.jsp" value="file://$PROJECT_DIR$/src/main/webapp/views/view_branch" />
+        <entry key="file://$PROJECT_DIR$/src/main/webapp/views/view_contract/add_contract_page.jsp" value="file://$PROJECT_DIR$/src/main/webapp/views/view_contract" />
         <entry key="file://$PROJECT_DIR$/src/main/webapp/views/view_customer/add_customer_page.jsp" value="file://$PROJECT_DIR$/src/main/webapp/views/view_customer" />
         <entry key="file://$PROJECT_DIR$/src/main/webapp/views/view_form_use/manage_form_use_page.jsp" value="file://$PROJECT_DIR$/src/main/webapp/views/view_form_use" />
       </map>

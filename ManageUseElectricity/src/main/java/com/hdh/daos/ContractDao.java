@@ -1,7 +1,7 @@
 package com.hdh.daos;
 
-import com.hdh.models.Branch;
-import com.hdh.models.Customer;
+
+import com.hdh.models.Contract;
 import com.hdh.utils.HibernateUtil;
 import org.hibernate.Criteria;
 import org.hibernate.HibernateException;
@@ -12,98 +12,102 @@ import org.hibernate.query.Query;
 import java.util.ArrayList;
 import java.util.List;
 
-public class BranchDao {
+public class ContractDao {
 
-    public List<Branch> getllListBranchs() {
-        List<Branch> listBranchResult = new ArrayList<>();
+    public boolean addContract(Contract contract) {
+        boolean checkAdd = false;
         Session session = HibernateUtil.getSessionFactory().openSession();
         Transaction transaction = null;
         try {
             transaction = session.beginTransaction();
-            Criteria branchCriteria = session.createCriteria(Branch.class);
-            listBranchResult = branchCriteria.list();
+            session.save(contract);
             transaction.commit();
+            checkAdd = true;
         } catch (HibernateException e) {
             if (transaction != null) transaction.rollback();
             e.printStackTrace();
         } finally {
             session.close();
         }
-        return listBranchResult;
+        return checkAdd;
     }
 
-    public void deleteBranch(Integer id) {
+    public List<Contract> getAllContract() {
+        List<Contract> contractList = new ArrayList<>();
         Session session = HibernateUtil.getSessionFactory().openSession();
         Transaction transaction = null;
         try {
             transaction = session.beginTransaction();
+            Criteria criteria = session.createCriteria(Contract.class);
+            contractList = criteria.list();
+            transaction.commit();
+        } catch (HibernateException e) {
+            if (transaction != null) transaction.rollback();
+            e.printStackTrace();
+        } finally {
+            session.close();
+            return contractList;
+        }
+    }
 
-            Branch branchDelete = session.get(Branch.class, id);
-            if (branchDelete != null) {
-                session.delete(branchDelete);
-                System.out.println("Delete branch success !!!");
+    public boolean deleteContract(Long id) {
+        boolean checkDelete = false;
+        Session session = HibernateUtil.getSessionFactory().openSession();
+        Transaction transaction = null;
+
+        try {
+            transaction = session.beginTransaction();
+
+            Contract contractDelete = session.get(Contract.class, id);
+            if (contractDelete != null) {
+                session.delete(contractDelete);
+                System.out.println("Delete contract success !!!");
             }
             transaction.commit();
-
+            checkDelete = true;
         } catch (HibernateException e) {
             if (transaction != null) transaction.rollback();
             e.printStackTrace();
         } finally {
             session.close();
         }
+        return checkDelete;
     }
 
-    public void updateBranch(Branch branch) {
+    public Contract findContractById(Long id) {
+        Contract contract = null;
         Session session = HibernateUtil.getSessionFactory().openSession();
         Transaction transaction = null;
         try {
             transaction = session.beginTransaction();
-            session.update(branch);
-            transaction.commit();
-        } catch (HibernateException e) {
-            if (transaction != null) transaction.rollback();
-            e.printStackTrace();
-        } finally {
-            session.close();
-        }
-    }
-
-    public Branch addBranch(Branch branch) {
-        Session session = HibernateUtil.getSessionFactory().openSession();
-        Transaction transaction = null;
-        Branch resultBranchAdd = null;
-        try {
-            transaction = session.beginTransaction();
-            Integer idBranchAdd = (Integer) session.save(branch);
-            transaction.commit();
-            resultBranchAdd = session.get(Branch.class, idBranchAdd);
-        } catch (HibernateException e) {
-            if (transaction != null) transaction.rollback();
-            e.printStackTrace();
-        } finally {
-            session.close();
-        }
-        return resultBranchAdd;
-    }
-
-    public Branch findBranchById(Integer id) {
-        Branch branch;
-        Session session = HibernateUtil.getSessionFactory().openSession();
-        Transaction transaction = null;
-        try {
-            transaction = session.beginTransaction();
-            Query query = session.createQuery("from Branch where id = :id");
+            Query query = session.createQuery("from Contract  where id = :id");
             query.setParameter("id", id);
-            branch = (Branch) query.uniqueResult();
+            contract = (Contract) query.uniqueResult();
             transaction.commit();
-            return branch;
         } catch (HibernateException e) {
             if (transaction != null) transaction.rollback();
             e.printStackTrace();
-            return null;
         } finally {
             session.close();
         }
+        return contract;
     }
 
+    public boolean updateContract(Contract contractUpdate) {
+        boolean checkUpdate = false;
+        Session session = HibernateUtil.getSessionFactory().openSession();
+        Transaction transaction = null;
+        try {
+            transaction = session.beginTransaction();
+            session.update(contractUpdate);
+            transaction.commit();
+            checkUpdate = true;
+        } catch (HibernateException e) {
+            if (transaction != null) transaction.rollback();
+            e.printStackTrace();
+        } finally {
+            session.close();
+        }
+        return checkUpdate;
+    }
 }

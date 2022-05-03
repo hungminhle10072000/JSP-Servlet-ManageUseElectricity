@@ -4,7 +4,7 @@
 <head>
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Manage Customer</title>
+    <title>Manage HouseHold Customer</title>
     <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/font-awesome.min.css"/>
     <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/css_home_page.css"/>
     <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/table.css"/>
@@ -28,7 +28,7 @@
     <div class="sidebar-links" style="margin-top: 1rem">
         <ul>
             <li class="tooltip-element" data-tooltip="0">
-                <a href="#" class="active" data-active="0">
+                <a href="${pageContext.request.contextPath}/CustomerController" data-active="0">
                     <div class="icon">
                         <i class='bx bx-folder'></i>
                         <i class='bx bxs-folder'></i>
@@ -36,8 +36,8 @@
                     <span class="link hide">List All Customer</span>
                 </a>
             </li>
-            <li class="tooltip-element" data-tooltip="2">
-                <a href="${pageContext.request.contextPath}/HouseHoldController" data-active="2">
+            <li class="tooltip-element" data-tooltip="1">
+                <a href="#" class="active" data-active="1">
                     <div class="icon">
                         <i class='bx bx-folder'></i>
                         <i class='bx bxs-folder'></i>
@@ -94,7 +94,7 @@
     </div>
 </nav>
 <main>
-    <h1 class="banner">Manage Customer</h1>
+    <h1 class="banner">Manage HouseHold Customer</h1>
 
     <input type="text" placeholder="Enter keyword....." id="searchBar">
 
@@ -107,11 +107,13 @@
                 <th>Address</th>
                 <th>Name</th>
                 <th>Phone Number</th>
+                <th>Indentity Card</th>
                 <th></th>
             </tr>
             <c:choose>
-                <c:when test="${customerList.size() == 0}">
+                <c:when test="${listHouseHoldCustomer == null}">
                     <tr>
+                        <td>No Data</td>
                         <td>No Data</td>
                         <td>No Data</td>
                         <td>No Data</td>
@@ -119,16 +121,24 @@
                         <td></td>
                     </tr>
                 </c:when>
-                <c:when test="${customerList.size() > 0}">
-                    <c:forEach items="${customerList}" var="customer">
+                <c:when test="${listHouseHoldCustomer != null}">
+                    <c:forEach items="${listHouseHoldCustomer}" var="houseHold">
                         <tr>
-                            <td>${customer.getId()}</td>
-                            <td>${customer.getAddress()}</td>
-                            <td>${customer.getName()}</td>
-                            <td>${customer.getPhoneNumber()}</td>
+                            <td>${houseHold.getId()}</td>
+                            <td contenteditable='true'>${houseHold.getAddress()}</td>
+                            <td contenteditable='true'>${houseHold.getName()}</td>
+                            <td class="td-unit-price"><input class="input-value-unit-price input-number" type="number"
+                                                             step="any"
+                                                             value="${houseHold.getPhoneNumber()}" min="0"/></td>
+                            <td class="td-unit-price"><input class="input-value-unit-price input-number" type="number"
+                                                             step="any"
+                                                             value="${houseHold.getIndentityCard()}" min="0"/></td>
                             <td>
-                                <button class="button-update">
-                                    Detail
+                                <button class="button-update btn-update-house-hold"
+                                        id-house-hold-update="${houseHold.getId()}">Update
+                                </button>
+                                <button class="button-delete btn-delete-house-hold"
+                                        id-house-hold-delete="${houseHold.getId()}">Delete
                                 </button>
                             </td>
                         </tr>
@@ -139,5 +149,90 @@
     </div>
 </main>
 <script src="${pageContext.request.contextPath}/resources/js/js_home_page.js"></script>
+<script type="text/javascript">
+
+    $(document).ready(function () {
+
+        $("#customers").on('click', '.btn-delete-house-hold', function () {
+
+            let currentRow = $(this).closest("tr");
+            let checkConfirm = confirm("Are you sure you want to delete !!!");
+            let idDelete = $(this).attr("id-house-hold-delete");
+            if (checkConfirm) {
+                $.ajax({
+                    type: "DELETE",
+                    url: '${pageContext.request.contextPath}/HouseHoldController',
+                    contentType: 'application/json',
+                    data: idDelete,
+                    dataType: 'json',
+                    success: function (data) {
+                        alert("Delete success");
+                        currentRow.remove();
+                    },
+                    error: function (data) {
+                        alert("Delete failed");
+                        window.scrollTo({top: 0, behavior: 'smooth'});
+                    }
+                })
+            }
+        })
+
+
+        $("#customers").on('click', '.btn-update-house-hold', function () {
+            let currentRow = $(this).closest('tr');
+            let idUpdate = $(this).attr('id-house-hold-update');
+            let address = currentRow.find("td:eq(1)").text().trim();
+            if (address == "") {
+                alert("Request enter address !!!!");
+                return;
+            }
+            let name = currentRow.find("td:eq(2)").text().trim();
+            if (name == "") {
+                alert("Request enter name !!!!");
+                return;
+            }
+            let phoneNumber = currentRow.find("td:eq(3) input[type='number']").val();
+            if (phoneNumber == "") {
+                alert("Request enter Phone Number !!!");
+                return;
+            }
+            if (Number(phoneNumber) < 0) {
+                alert("Request re-enter Phone Number !!!");
+                return;
+            }
+            let indentityCard = currentRow.find("td:eq(4) input[type='number']").val();
+            if (indentityCard == "") {
+                alert("Request enter Indentity Card !!!");
+                return;
+            }
+
+            let myData = {
+                "id": idUpdate,
+                "address": address,
+                "name": name,
+                "phoneNumber": phoneNumber,
+                "indentityCard": indentityCard
+            }
+
+            let checkConfirm = confirm("Are you sure you want to update !!!");
+            if (checkConfirm) {
+                $.ajax({
+                    type: "PUT",
+                    url: '${pageContext.request.contextPath}/HouseHoldController',
+                    contentType: 'application/json',
+                    data: JSON.stringify(myData),
+                    success: function (result) {
+                        alert("Update success");
+                    },
+                    error: function (data) {
+                        alert("Update failed");
+                        window.scrollTo({top: 0, behavior: 'smooth'});
+                    }
+                })
+            }
+        })
+    })
+
+</script>
 </body>
 </html>

@@ -4,7 +4,7 @@
 <head>
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Manage Customer</title>
+    <title>Manage Electricmeter</title>
     <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/font-awesome.min.css"/>
     <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/css_home_page.css"/>
     <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/table.css"/>
@@ -33,38 +33,20 @@
                         <i class='bx bx-folder'></i>
                         <i class='bx bxs-folder'></i>
                     </div>
-                    <span class="link hide">List All Customer</span>
+                    <span class="link hide">List All Electric Meter</span>
                 </a>
             </li>
             <li class="tooltip-element" data-tooltip="2">
-                <a href="${pageContext.request.contextPath}/HouseHoldController" data-active="2">
+                <a href="${pageContext.request.contextPath}/ElectricMeterController?typePage=addContractPage" data-active="2">
                     <div class="icon">
                         <i class='bx bx-folder'></i>
                         <i class='bx bxs-folder'></i>
                     </div>
-                    <span class="link hide">List All HouseHold Customer</span>
+                    <span class="link hide">Add Electric Meter</span>
                 </a>
             </li>
-            <li class="tooltip-element" data-tooltip="2">
-                <a href="${pageContext.request.contextPath}/BusinessCustomerController" data-active="2">
-                    <div class="icon">
-                        <i class='bx bx-folder'></i>
-                        <i class='bx bxs-folder'></i>
-                    </div>
-                    <span class="link hide">List All Business Customer</span>
-                </a>
-            </li>
-            <li class="tooltip-element" data-tooltip="3">
-                <a href="${pageContext.request.contextPath}/views/view_customer/add_customer_page.jsp" data-active="3">
-                    <div class="icon">
-                        <i class='bx bx-folder'></i>
-                        <i class='bx bxs-folder'></i>
-                    </div>
-                    <span class="link hide">Add Customer</span>
-                </a>
-            </li>
-            <li class="tooltip-element" data-tooltip="4">
-                <a href="${pageContext.request.contextPath}/views/home_admin_page.jsp" data-active="4">
+            <li class="tooltip-element" data-tooltip="1">
+                <a href="${pageContext.request.contextPath}/views/home_admin_page.jsp" data-active="1">
                     <div class="icon">
                         <i class='bx bx-folder'></i>
                         <i class='bx bxs-folder'></i>
@@ -94,47 +76,18 @@
     </div>
 </nav>
 <main>
-    <h1 class="banner">Manage Customer</h1>
+    <h1 class="banner">Manage Form Use</h1>
 
-    <input type="text" placeholder="Enter keyword....." id="searchBar">
-
-    <button class="button-add" style="margin-bottom: 1rem; width: fit-content">Search</button>
+    <input type="text" placeholder="Search.." id="searchBar">
 
     <div>
-        <table id="customers" class="table-custom">
-            <tr>
-                <th>ID</th>
-                <th>Address</th>
-                <th>Name</th>
-                <th>Phone Number</th>
-                <th></th>
-            </tr>
-            <c:choose>
-                <c:when test="${customerList.size() == 0}">
-                    <tr>
-                        <td>No Data</td>
-                        <td>No Data</td>
-                        <td>No Data</td>
-                        <td>No Data</td>
-                        <td></td>
-                    </tr>
-                </c:when>
-                <c:when test="${customerList.size() > 0}">
-                    <c:forEach items="${customerList}" var="customer">
-                        <tr>
-                            <td>${customer.getId()}</td>
-                            <td>${customer.getAddress()}</td>
-                            <td>${customer.getName()}</td>
-                            <td>${customer.getPhoneNumber()}</td>
-                            <td>
-                                <button class="button-update">
-                                    Detail
-                                </button>
-                            </td>
-                        </tr>
-                    </c:forEach>
-                </c:when>
-            </c:choose>
+        <table id="electricMeter" class="table-custom">
+            <thead>
+            <th>ID</th>
+            <th>Type Electric Meter</th>
+            <th>Contract</th>
+            <th></th>
+            </thead>
         </table>
     </div>
 </main>

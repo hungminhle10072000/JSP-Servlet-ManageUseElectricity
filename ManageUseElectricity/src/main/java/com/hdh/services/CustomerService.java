@@ -30,4 +30,24 @@ public class CustomerService {
     public boolean updateBusinessCustomer(Business business) {
         return customerDao.updateBusinessCustomer(business);
     }
+
+    public boolean deleteBusinessCustomer(Long idDelete) {
+        return customerDao.deleteBusinessCustomer(idDelete);
+    }
+
+    public List<HouseHold> getAllHouseHoldCustomer() {
+        return customerDao.getAllHouseHoldCustomer();
+    }
+
+    public boolean deleteHouseHoldCustomer(Long idDelete) {
+        return customerDao.deleteHouseHoldCustomer(idDelete);
+    }
+
+    public boolean updateHouseHoldCustomer(HouseHold houseHold) {
+        return customerDao.updateHouseHoldCustomer(houseHold);
+    }
+
+    public Customer findCustomerById(Long id) {
+        return customerDao.findCustomerById(id);
+    }
 }

@@ -66,9 +66,11 @@ public class FormUseController extends HttpServlet {
         try {
             Integer idDelete = Integer.parseInt(req.getReader().readLine());
             formUseService.deleteFormUses(idDelete);
+            resp.setStatus(200);
             json.addProperty("Alert", "Success");
             out.print(json);
         } catch (Exception e) {
+            resp.setStatus(400);
             json.addProperty("Alert", "Failed");
             out.print(json);
         }

@@ -28,4 +28,8 @@ public class FormUseService {
     public boolean updateFormUse(FormUse formUse) {
         return formUseDao.updateFormUse(formUse);
     }
+
+    public FormUse findFormUseById(Integer id) {
+        return formUseDao.findFormUseById(id);
+    }
 }
