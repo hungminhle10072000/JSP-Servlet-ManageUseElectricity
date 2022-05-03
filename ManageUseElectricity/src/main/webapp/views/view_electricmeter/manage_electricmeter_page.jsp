@@ -6,7 +6,7 @@
 <head>
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Manage Contract</title>
+    <title>Manage Electric Meter</title>
     <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/font-awesome.min.css"/>
     <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/css_home_page.css"/>
     <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/table.css"/>
@@ -30,22 +30,22 @@
     <div class="sidebar-links" style="margin-top: 1rem">
         <ul>
             <li class="tooltip-element" data-tooltip="0">
-                <a href="#" class="active" data-active="0">
+                <a href="${pageContext.request.contextPath}/ElectricMeterController" class="active" data-active="0">
                     <div class="icon">
                         <i class='bx bx-folder'></i>
                         <i class='bx bxs-folder'></i>
                     </div>
-                    <span class="link hide">List All Contract</span>
+                    <span class="link hide">List All Electric Meter</span>
                 </a>
             </li>
             <li class="tooltip-element" data-tooltip="1">
-                <a href="${pageContext.request.contextPath}/ContractController?typePage=addContractPage"
+                <a href="${pageContext.request.contextPath}/ElectricMeterController?typePage=addElectricPage"
                    data-active="1">
                     <div class="icon">
                         <i class='bx bx-folder'></i>
                         <i class='bx bxs-folder'></i>
                     </div>
-                    <span class="link hide">Add Contract</span>
+                    <span class="link hide">Add Electric Meter</span>
                 </a>
             </li>
             <li class="tooltip-element" data-tooltip="2">
@@ -79,51 +79,30 @@
     </div>
 </nav>
 <main>
-    <h1 class="banner">Manage Contract</h1>
+    <h1 class="banner">Manage Electric Meter</h1>
 
     <input type="text" placeholder="Search.." id="searchBar">
 
     <div>
-        <table id="contracts" class="table-custom">
+        <table id="electrics" class="table-custom">
             <tr>
                 <th>ID</th>
-                <th>Content</th>
-                <th>Date Sign</th>
-                <th>Branch</th>
-                <th>Form Use</th>
-                <th>Customer</th>
+                <th>Type Electric Meter</th>
+                <th>Contract</th>
                 <th></th>
             </tr>
-            <c:if test="${contractList.size() > 0}">
-                <c:forEach items="${contractList}" var="contract">
+            <c:if test="${electricMeterList.size() > 0}">
+                <c:forEach items="${electricMeterList}" var="electric">
                     <tr>
-                        <td>${contract.getId()}</td>
-                        <td>
-                                <%--                                <c:when test="${contract.getContent().size() < 50}">--%>
-                                ${contract.getContent()}
-                                <%--                                </c:when>--%>
-                                <%--                                <c:when test="${contract.getContent().size() >= 50}">--%>
-                                <%--                                    ${fn:substring(contract.getContent(), 0, 50)}--%>
-                                <%--                                </c:when>--%>
-                        </td>
-                        <td>
-                            <fmt:formatDate pattern="dd-MM-yyyy" value="${contract.getDateSign()}"/>
-                        </td>
-                        <td>
-                                ${contract.getBranch().getId()} - ${contract.getBranch().getNameBranch()}
-                        </td>
-                        <td>
-                                ${contract.getFormUse().getId()} - ${contract.getFormUse().getNameForm()}
-                        </td>
-                        <td>
-                                ${contract.getCustomer().getId()} - ${contract.getCustomer().getName()}
-                        </td>
+                        <td>${electric.id}</td>
+                        <td>${electric.typeElectricMeter}</td>
+                        <td>${electric.contract.id}</td>
                         <td>
                             <button
-                                    class="button-update btn-detail-contract" id-contract-detail="${contract.getId()}">
+                                    class="button-update btn-detail-electric" id-electric-detail="${electric.getId()}">
                                 Detail
                             </button>
-                            <button class="button-delete btn-delete-contract" id-contract-delete="${contract.getId()}">
+                            <button class="button-delete btn-delete-electric" id-electric-delete="${electric.getId()}">
                                 Delete
                             </button>
                         </td>
@@ -135,17 +114,16 @@
 </main>
 <script src="${pageContext.request.contextPath}/resources/js/js_home_page.js"></script>
 <script type="text/javascript">
-
     $(document).ready(function () {
-        $("#contracts").on('click', '.btn-delete-contract', function () {
+        $("#electrics").on('click', '.btn-delete-electric', function () {
 
             let currentRow = $(this).closest("tr");
             let checkConfirm = confirm("Are you sure you want to delete !!!");
-            let idDelete = $(this).attr("id-contract-delete");
+            let idDelete = $(this).attr("id-electric-delete");
             if (checkConfirm) {
                 $.ajax({
                     type: "DELETE",
-                    url: '${pageContext.request.contextPath}/ContractController',
+                    url: '${pageContext.request.contextPath}/ElectricMeterController',
                     contentType: 'application/json',
                     data: idDelete,
                     dataType: 'json',
@@ -161,9 +139,9 @@
             }
         })
 
-        $("#contracts").on('click', '.btn-detail-contract', function () {
-            let idDetail = $(this).attr("id-contract-detail");
-            window.location.assign('${pageContext.request.contextPath}/ContractController?typePage=detailContractPage&idDetail=' + idDetail);
+        $("#electrics").on('click', '.btn-detail-electric', function () {
+            let idDetail = $(this).attr("id-electric-detail");
+            window.location.assign('${pageContext.request.contextPath}/ElectricMeterController?typePage=detailElectricPage&idDetail=' + idDetail);
         })
     })
 </script>

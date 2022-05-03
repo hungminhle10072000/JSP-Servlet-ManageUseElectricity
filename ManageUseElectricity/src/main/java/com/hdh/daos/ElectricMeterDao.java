@@ -1,26 +1,28 @@
 package com.hdh.daos;
 
-
+import com.hdh.models.Business;
 import com.hdh.models.Contract;
+import com.hdh.models.ElectricMeter;
 import com.hdh.utils.HibernateUtil;
 import org.hibernate.Criteria;
 import org.hibernate.HibernateException;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
+import org.hibernate.criterion.Restrictions;
 import org.hibernate.query.Query;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class ContractDao {
+public class ElectricMeterDao {
 
-    public boolean addContract(Contract contract) {
+    public boolean addElectricMeter(ElectricMeter electricMeter) {
         boolean checkAdd = false;
         Session session = HibernateUtil.getSessionFactory().openSession();
         Transaction transaction = null;
         try {
             transaction = session.beginTransaction();
-            session.save(contract);
+            session.save(electricMeter);
             transaction.commit();
             checkAdd = true;
         } catch (HibernateException e) {
@@ -32,42 +34,56 @@ public class ContractDao {
         return checkAdd;
     }
 
-    public List<Contract> getAllContract() {
-        List<Contract> contractList = new ArrayList<>();
+    public ElectricMeter findElectricMeterByContract(Long idContract) {
+        ElectricMeter electricMeter = null;
         Session session = HibernateUtil.getSessionFactory().openSession();
         Transaction transaction = null;
         try {
             transaction = session.beginTransaction();
-            Criteria criteria = session.createCriteria(Contract.class);
-            contractList = criteria.list();
+            Query query = session.createQuery("from ElectricMeter As u where u.contract.id = :idContract");
+            query.setParameter("idContract", idContract);
+            electricMeter = (ElectricMeter) query.uniqueResult();
             transaction.commit();
         } catch (HibernateException e) {
             if (transaction != null) transaction.rollback();
             e.printStackTrace();
         } finally {
             session.close();
-            return contractList;
         }
+        return electricMeter;
     }
 
-    public boolean deleteContract(Long id) {
-        boolean checkDelete = false;
+    public List<ElectricMeter> getAllElectricMeter() {
+        List<ElectricMeter> electricMeterList = new ArrayList<>();
         Session session = HibernateUtil.getSessionFactory().openSession();
         Transaction transaction = null;
-
         try {
             transaction = session.beginTransaction();
-            String hql = "DELETE FROM Contract As u WHERE u.id = :id ";
+            Criteria criteria = session.createCriteria(ElectricMeter.class);
+            electricMeterList = criteria.list();
+            transaction.commit();
+        } catch (HibernateException e) {
+            if (transaction != null) transaction.rollback();
+            e.printStackTrace();
+        } finally {
+            session.close();
+        }
+        return electricMeterList;
+    }
+
+    public boolean deleteElectricMeter(Long idDelete) {
+
+        boolean checkDelete = false;
+
+        Session session = HibernateUtil.getSessionFactory().openSession();
+        Transaction transaction = null;
+        try {
+            transaction = session.beginTransaction();
+            String hql = "DELETE FROM ElectricMeter As u WHERE u.id = :id ";
             Query query = session.createQuery(hql);
-            query.setParameter("id", id);
+            query.setParameter("id", idDelete);
             int result = query.executeUpdate();
             checkDelete = true;
-//            Contract contractDelete = session.get(Contract.class, id);
-//            if (contractDelete != null) {
-//                session.delete(contractDelete);
-//                System.out.println("Delete contract success !!!");
-//            checkDelete = true;
-//            }
             transaction.commit();
         } catch (HibernateException e) {
             if (transaction != null) transaction.rollback();
@@ -78,15 +94,15 @@ public class ContractDao {
         return checkDelete;
     }
 
-    public Contract findContractById(Long id) {
-        Contract contract = null;
+    public ElectricMeter findElectricMeterById(Long id) {
+        ElectricMeter electricMeter = null;
         Session session = HibernateUtil.getSessionFactory().openSession();
         Transaction transaction = null;
         try {
             transaction = session.beginTransaction();
-            Query query = session.createQuery("from Contract  where id = :id");
+            Query query = session.createQuery("from ElectricMeter  where id = :id");
             query.setParameter("id", id);
-            contract = (Contract) query.uniqueResult();
+            electricMeter = (ElectricMeter) query.uniqueResult();
             transaction.commit();
         } catch (HibernateException e) {
             if (transaction != null) transaction.rollback();
@@ -94,16 +110,16 @@ public class ContractDao {
         } finally {
             session.close();
         }
-        return contract;
+        return electricMeter;
     }
 
-    public boolean updateContract(Contract contractUpdate) {
+    public boolean updateElectric(ElectricMeter electricMeter) {
         boolean checkUpdate = false;
         Session session = HibernateUtil.getSessionFactory().openSession();
         Transaction transaction = null;
         try {
             transaction = session.beginTransaction();
-            session.update(contractUpdate);
+            session.update(electricMeter);
             transaction.commit();
             checkUpdate = true;
         } catch (HibernateException e) {
@@ -114,4 +130,5 @@ public class ContractDao {
         }
         return checkUpdate;
     }
+
 }

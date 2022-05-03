@@ -1,6 +1,7 @@
 package com.hdh.models;
 
 import lombok.Data;
+import org.hibernate.annotations.Cascade;
 
 import javax.persistence.*;
 import java.util.Date;
@@ -31,4 +32,8 @@ public class Contract {
     @OneToOne
     @JoinColumn(name = "customer_id", nullable = false)
     private Customer customer;
+
+    @OneToOne(mappedBy = "contract", cascade = CascadeType.ALL)
+    @Cascade({org.hibernate.annotations.CascadeType.SAVE_UPDATE, org.hibernate.annotations.CascadeType.DELETE})
+    private ElectricMeter electricMeter;
 }

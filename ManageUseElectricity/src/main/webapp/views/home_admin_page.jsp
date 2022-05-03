@@ -72,7 +72,7 @@
                 </a>
             </li>
             <li class="tooltip-element" data-tooltip="5">
-                <a href="#" data-active="5">
+                <a href="${pageContext.request.contextPath}/ElectricMeterController" data-active="5">
                     <div class="icon">
                         <i class='bx bx-bar-chart-square'></i>
                         <i class='bx bxs-bar-chart-square'></i>

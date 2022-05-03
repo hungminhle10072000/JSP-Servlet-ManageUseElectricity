@@ -63,6 +63,11 @@ public class ContractController extends HttpServlet {
         request.setCharacterEncoding("UTF-8");
         response.setCharacterEncoding("UTF-8");
 
+
+        List<Customer> customerList = customerService.getAllCustomer();
+        List<Branch> branchList = branchService.listBranches();
+        List<FormUse> formUseList = formUseService.listFormUses();
+
         String contentContract = request.getParameter("contentContract");
         String sDate = request.getParameter("dateSign");
         Long idCustomer = Long.valueOf(request.getParameter("selectCustomer"));
@@ -73,7 +78,7 @@ public class ContractController extends HttpServlet {
         Customer customer = customerService.findCustomerById(idCustomer);
 
         String typePostContract = request.getParameter("typePostContract");
-        if (typePostContract.equals("update")) {
+        if (typePostContract != null && typePostContract.equals("update")) {
             Long idContractUpdate = Long.valueOf(request.getParameter("idContract"));
             try {
                 Date dateSign = new SimpleDateFormat("yyyy-MM-dd").parse(sDate);
@@ -99,6 +104,9 @@ public class ContractController extends HttpServlet {
                 request.setAttribute("alert", "Update failed");
                 e.printStackTrace();
             }
+            request.setAttribute("customerList", customerList);
+            request.setAttribute("branchList", branchList);
+            request.setAttribute("formUseList", formUseList);
             RequestDispatcher requestDispatcher = request.getRequestDispatcher("/views/view_contract/detail_contract_page.jsp");
             requestDispatcher.forward(request, response);
         } else {
@@ -118,6 +126,9 @@ public class ContractController extends HttpServlet {
                 request.setAttribute("alert", "Add failed");
                 e.printStackTrace();
             }
+            request.setAttribute("customerList", customerList);
+            request.setAttribute("branchList", branchList);
+            request.setAttribute("formUseList", formUseList);
             RequestDispatcher requestDispatcher = request.getRequestDispatcher("/views/view_contract/add_contract_page.jsp");
             requestDispatcher.forward(request, response);
         }
