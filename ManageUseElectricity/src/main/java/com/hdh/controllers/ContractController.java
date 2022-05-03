@@ -118,10 +118,15 @@ public class ContractController extends HttpServlet {
                 contractAdd.setDateSign(dateSign);
                 contractAdd.setBranch(branch);
                 contractAdd.setFormUse(formUse);
-                contractAdd.setCustomer(customer);
 
-                contractService.addContract(contractAdd);
-                request.setAttribute("alert", "Add Success");
+                Contract contractCheck = contractService.findContractByCustomer(idCustomer);
+                if (contractCheck != null) {
+                    request.setAttribute("alert", "Exists contract with customer id: " + idCustomer);
+                } else {
+                    contractAdd.setCustomer(customer);
+                    contractService.addContract(contractAdd);
+                    request.setAttribute("alert", "Add Success");
+                }
             } catch (Exception e) {
                 request.setAttribute("alert", "Add failed");
                 e.printStackTrace();

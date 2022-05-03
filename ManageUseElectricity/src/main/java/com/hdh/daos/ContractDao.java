@@ -2,6 +2,7 @@ package com.hdh.daos;
 
 
 import com.hdh.models.Contract;
+import com.hdh.models.ElectricMeter;
 import com.hdh.utils.HibernateUtil;
 import org.hibernate.Criteria;
 import org.hibernate.HibernateException;
@@ -113,5 +114,24 @@ public class ContractDao {
             session.close();
         }
         return checkUpdate;
+    }
+
+    public Contract findContractByCustomer(Long idCustomer) {
+        Contract contract = null;
+        Session session = HibernateUtil.getSessionFactory().openSession();
+        Transaction transaction = null;
+        try {
+            transaction = session.beginTransaction();
+            Query query = session.createQuery("from Contract As u where u.customer.id = :id");
+            query.setParameter("id", idCustomer);
+            contract = (Contract) query.uniqueResult();
+            transaction.commit();
+        } catch (HibernateException e) {
+            if (transaction != null) transaction.rollback();
+            e.printStackTrace();
+        } finally {
+            session.close();
+        }
+        return contract;
     }
 }

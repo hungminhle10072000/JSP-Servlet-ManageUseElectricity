@@ -27,4 +27,8 @@ public class ContractService {
     public boolean updateContract(Contract contractUpdate) {
         return contractDao.updateContract(contractUpdate);
     }
+
+    public Contract findContractByCustomer(Long id) {
+        return contractDao.findContractByCustomer(id);
+    }
 }
