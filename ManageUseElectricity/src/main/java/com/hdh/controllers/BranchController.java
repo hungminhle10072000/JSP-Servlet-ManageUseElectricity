@@ -12,6 +12,7 @@ import javax.servlet.annotation.*;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.ArrayList;
 import java.util.List;
 
 @WebServlet(name = "branchController", value = "/branchController")
@@ -21,10 +22,19 @@ public class BranchController extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        List<Branch> branchList = branchService.listBranches();
+
+        List<Branch> branchList;
+        String keyWord = request.getParameter("keyWord");
+
+        if (keyWord != null) {
+            branchList = branchService.findBranch(keyWord);
+        } else {
+            branchList = branchService.listBranches();
+        }
         request.setAttribute("branchList", branchList);
         RequestDispatcher requestDispatcher = request.getRequestDispatcher("/views/view_branch/manage_branch_page.jsp");
         requestDispatcher.forward(request, response);
+
     }
 
     @Override

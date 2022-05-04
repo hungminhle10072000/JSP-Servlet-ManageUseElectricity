@@ -81,7 +81,7 @@
                 </a>
             </li>
             <li class="tooltip-element" data-tooltip="6">
-                <a href="#" data-active="6">
+                <a href="${pageContext.request.contextPath}/NoteBookController" data-active="6">
                     <div class="icon">
                         <i class='bx bx-bar-chart-square'></i>
                         <i class='bx bxs-bar-chart-square'></i>

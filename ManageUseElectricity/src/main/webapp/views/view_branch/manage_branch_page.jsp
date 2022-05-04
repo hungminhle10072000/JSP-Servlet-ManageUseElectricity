@@ -71,6 +71,8 @@
 
     <input type="text" placeholder="Search.." id="searchBar">
 
+    <button class="button-add btn-search" style="margin-bottom: 1rem; width: fit-content">Search</button>
+
     <div>
         <table id="branchs">
             <tr>
@@ -80,9 +82,9 @@
                 <th></th>
             </tr>
             <c:choose>
-<%--                <c:when test="${branchList.size() == 0}">--%>
-<%--                    <h2>NO DATA</h2>--%>
-<%--                </c:when>--%>
+                <%--                <c:when test="${branchList.size() == 0}">--%>
+                <%--                    <h2>NO DATA</h2>--%>
+                <%--                </c:when>--%>
                 <c:when test="${branchList.size() > 0}">
                     <c:forEach items="${branchList}" var="branch">
                         <tr>
@@ -239,6 +241,12 @@
 
             }
         })
+
+        $(".btn-search").on('click', function () {
+            let keyWord = $("#searchBar").val();
+            window.location.assign('${pageContext.request.contextPath}/branchController?keyWord=' + keyWord);
+        })
+
     })
 </script>
 </body>
