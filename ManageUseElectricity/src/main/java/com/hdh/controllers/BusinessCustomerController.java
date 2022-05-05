@@ -3,6 +3,7 @@ package com.hdh.controllers;
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
 import com.hdh.models.Business;
+import com.hdh.models.HouseHold;
 import com.hdh.services.CustomerService;
 
 import javax.servlet.*;
@@ -11,6 +12,7 @@ import javax.servlet.annotation.*;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.List;
 
 @WebServlet(name = "BusinessCustomerController", value = "/BusinessCustomerController")
 public class BusinessCustomerController extends HttpServlet {
@@ -19,7 +21,15 @@ public class BusinessCustomerController extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        request.setAttribute("listBusinessCustomer", customerService.getAllBusiness());
+        List<Business> businessList;
+        String keyWord = request.getParameter("keyWord");
+        if (keyWord != null) {
+            businessList = customerService.findBusinessCustomer(keyWord);
+        } else {
+            businessList = customerService.getAllBusiness();
+        }
+        request.setAttribute("keyWord", keyWord);
+        request.setAttribute("listBusinessCustomer", businessList);
         RequestDispatcher requestDispatcher = request.getRequestDispatcher("/views/view_customer/manage_business_page.jsp");
         requestDispatcher.forward(request, response);
     }

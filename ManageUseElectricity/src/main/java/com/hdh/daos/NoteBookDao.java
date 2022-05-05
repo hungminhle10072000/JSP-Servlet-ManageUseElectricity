@@ -151,4 +151,35 @@ public class NoteBookDao {
         return checkUpdate;
     }
 
+    public List<NoteBook> findNoteBook(int month, int year, Long idCustomer) {
+        List<NoteBook> noteBookList = new ArrayList<>();
+        Session session = HibernateUtil.getSessionFactory().openSession();
+        Transaction transaction = null;
+        try {
+            transaction = session.beginTransaction();
+            Criteria criteria = session.createCriteria(NoteBook.class)
+                    .createAlias("electricMeter.contract.customer", "c");
+            if (idCustomer != 0L) {
+                criteria.add(Restrictions.eq("c.id", idCustomer));
+            }
+            if (criteria.list().size() > 0) {
+                for (Object item : criteria.list()) {
+                    NoteBook noteBook = (NoteBook) item;
+                    int monthCheck = noteBook.getDateWrite().getMonth() + 1;
+                    int yearCheck = noteBook.getDateWrite().getYear() + 1900;
+                    if (monthCheck == month && yearCheck == year) {
+                        noteBookList.add(noteBook);
+                    }
+                }
+            }
+            transaction.commit();
+        } catch (HibernateException e) {
+            if (transaction != null) transaction.rollback();
+            e.printStackTrace();
+        } finally {
+            session.close();
+        }
+        return noteBookList;
+    }
+
 }

@@ -33,4 +33,8 @@ public class NoteBookService {
         return noteBookDao.updateNoteBook(noteBookUpdate);
     }
 
+    public List<NoteBook> findNoteBook(int month, int year, Long idCustomer) {
+        return noteBookDao.findNoteBook(month, year, idCustomer);
+    }
+
 }

@@ -80,8 +80,9 @@
 </nav>
 <main>
     <h1 class="banner">Manage Contract</h1>
+    <input type="text" value="${keyWord}" placeholder="Search.." id="searchBar">
 
-    <input type="text" placeholder="Search.." id="searchBar">
+    <button class="button-add btn-search" style="margin-bottom: 1rem; width: fit-content">Search</button>
 
     <div>
         <table id="contracts" class="table-custom">
@@ -164,6 +165,11 @@
         $("#contracts").on('click', '.btn-detail-contract', function () {
             let idDetail = $(this).attr("id-contract-detail");
             window.location.assign('${pageContext.request.contextPath}/ContractController?typePage=detailContractPage&idDetail=' + idDetail);
+        })
+
+        $(".btn-search").on('click', function () {
+            let keyWord = $("#searchBar").val();
+            window.location.assign('${pageContext.request.contextPath}/ContractController?keyWord=' + keyWord);
         })
     })
 </script>

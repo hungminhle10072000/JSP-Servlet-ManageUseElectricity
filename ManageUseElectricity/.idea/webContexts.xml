@@ -11,6 +11,7 @@
         <entry key="file://$PROJECT_DIR$/src/main/webapp/views/view_customer/add_customer_page.jsp" value="file://$PROJECT_DIR$/src/main/webapp/views/view_customer" />
         <entry key="file://$PROJECT_DIR$/src/main/webapp/views/view_electricmeter/add_electricmeter_page.jsp" value="file://$PROJECT_DIR$/src/main/webapp/views/view_electricmeter" />
         <entry key="file://$PROJECT_DIR$/src/main/webapp/views/view_form_use/manage_form_use_page.jsp" value="file://$PROJECT_DIR$/src/main/webapp/views/view_form_use" />
+        <entry key="file://$PROJECT_DIR$/src/main/webapp/views/view_notebook/manage_notebook_page.jsp" value="file://$PROJECT_DIR$/src/main/webapp/views/view_notebook" />
       </map>
     </option>
   </component>

@@ -31,4 +31,8 @@ public class ContractService {
     public Contract findContractByCustomer(Long id) {
         return contractDao.findContractByCustomer(id);
     }
+
+    public List<Contract> findContract(String keyWord) {
+        return contractDao.findContract(keyWord);
+    }
 }

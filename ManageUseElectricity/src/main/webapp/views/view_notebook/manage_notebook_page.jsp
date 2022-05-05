@@ -81,7 +81,39 @@
 <main>
     <h1 class="banner">Manage NoteBook</h1>
 
-    <input type="text" placeholder="Search.." id="searchBar">
+    <form action="${pageContext.request.contextPath}/NoteBookController" method="get">
+        <input hidden id="searchForm" name="searchForm"/>
+        <div style="display: inline; width: 50%">
+            <div>
+                <label for="monthFind">Month</label>
+                <input value="${monthFind}" required type="number" id="monthFind" name="monthFind" min="1" max="12"/>
+            </div>
+
+            <div>
+                <label for="yearFind">Year</label>
+                <input value="${yearFind}" required type="number" id="yearFind" name="yearFind" min="2000"
+                       max="<%= new java.util.Date().getYear() + 1900 %>"/>
+            </div>
+        </div>
+
+        <div>
+            <label for="selectCustomer" style="margin-bottom: 2rem;">Select Customer</label>
+            <div class="custom-select" style="width:200px; display: inline">
+                <select name="selectCustomer" id="selectCustomer" required style="height: 2rem !important;">
+                    <option value="0">Select Customer</option>
+                    <c:if test="${customerList.size() > 0}">
+                        <c:forEach items="${customerList}" var="customer">
+                            <option ${customer.id == idFind ? 'selected="selected"' : ''}
+                                    value="${customer.getId()}">${customer.getId()} - ${customer.getName()}</option>
+                        </c:forEach>
+                    </c:if>
+                </select>
+            </div>
+        </div>
+
+        <button class="button-add btn-search" style="margin-top: 1rem ;margin-bottom: 1rem; width: fit-content">Search
+        </button>
+    </form>
 
     <div>
         <table id="electrics" class="table-custom">
@@ -119,6 +151,16 @@
 <script src="${pageContext.request.contextPath}/resources/js/js_home_page.js"></script>
 <script type="text/javascript">
     $(document).ready(function () {
+
+        // $(".btn-search").on('click', function (event) {
+        //     let valueCustomer = $('#selectCustomer').val();
+        //     if (valueCustomer == 0) {
+        //         alert("Request choose customer !!!!");
+        //         event.preventDefault();
+        //         return;
+        //     }
+        // })
+
         $("#electrics").on('click', '.btn-delete-notebook', function () {
 
             let currentRow = $(this).closest("tr");

@@ -32,4 +32,8 @@ public class ElectricMeterService {
     public boolean updateElectric(ElectricMeter electricMeter) {
         return electricMeterDao.updateElectric(electricMeter);
     }
+
+    public List<ElectricMeter> findElectric(String keyWord) {
+        return electricMeterDao.findElectricMeter(keyWord);
+    }
 }

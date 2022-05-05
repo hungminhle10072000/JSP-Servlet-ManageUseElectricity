@@ -22,7 +22,15 @@ public class FormUseController extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        List<FormUse> formUseList = formUseService.listFormUses();
+        List<FormUse> formUseList;
+        String keyWord = request.getParameter("keyWord");
+
+        if (keyWord != null) {
+            formUseList = formUseService.findFormUse(keyWord);
+        } else {
+            formUseList = formUseService.listFormUses();
+        }
+        request.setAttribute("keyWord", keyWord);
         request.setAttribute("formUseList", formUseList);
         RequestDispatcher requestDispatcher = request.getRequestDispatcher("/views/view_form_use/manage_form_use_page.jsp");
         requestDispatcher.forward(request, response);

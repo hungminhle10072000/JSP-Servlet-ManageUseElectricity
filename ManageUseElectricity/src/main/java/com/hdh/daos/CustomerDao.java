@@ -220,7 +220,6 @@ public class CustomerDao {
 
     public List<Customer> findCustomer(String keyword) {
         Long id = -1L;
-        boolean checkConvertId = false;
         List<Customer> customerList = new ArrayList<>();
         Session session = HibernateUtil.getSessionFactory().openSession();
         Transaction transaction = null;
@@ -229,22 +228,14 @@ public class CustomerDao {
             Criteria criteria = session.createCriteria(Customer.class);
             try {
                 id = Long.valueOf(keyword);
-                checkConvertId = true;
             } catch (Exception e) {
                 e.printStackTrace();
             }
-            if (checkConvertId) {
-                criteria.add(Restrictions.disjunction()
-                        .add(Restrictions.like("name", keyword, MatchMode.ANYWHERE))
-                        .add(Restrictions.like("phoneNumber", keyword, MatchMode.ANYWHERE))
-                        .add(Restrictions.eq("id", id))
-                        .add(Restrictions.like("address", keyword, MatchMode.ANYWHERE)));
-            } else {
-                criteria.add(Restrictions.disjunction()
-                        .add(Restrictions.like("name", keyword, MatchMode.ANYWHERE))
-                        .add(Restrictions.like("phoneNumber", keyword, MatchMode.ANYWHERE))
-                        .add(Restrictions.like("address", keyword, MatchMode.ANYWHERE)));
-            }
+            criteria.add(Restrictions.disjunction()
+                    .add(Restrictions.like("name", keyword, MatchMode.ANYWHERE))
+                    .add(Restrictions.like("phoneNumber", keyword, MatchMode.ANYWHERE))
+                    .add(Restrictions.eq("id", id))
+                    .add(Restrictions.like("address", keyword, MatchMode.ANYWHERE)));
             customerList = criteria.list();
             transaction.commit();
         } catch (HibernateException e) {
@@ -254,6 +245,66 @@ public class CustomerDao {
             session.close();
         }
         return customerList;
+    }
+
+    public List<HouseHold> findHouseHoldCustomer(String keyword) {
+        Long id = -1L;
+        List<HouseHold> houseHoldList = new ArrayList<>();
+        Session session = HibernateUtil.getSessionFactory().openSession();
+        Transaction transaction = null;
+        try {
+            transaction = session.beginTransaction();
+            Criteria criteria = session.createCriteria(HouseHold.class);
+            try {
+                id = Long.valueOf(keyword);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+            criteria.add(Restrictions.disjunction()
+                    .add(Restrictions.like("name", keyword, MatchMode.ANYWHERE))
+                    .add(Restrictions.like("phoneNumber", keyword, MatchMode.ANYWHERE))
+                    .add(Restrictions.eq("id", id))
+                    .add(Restrictions.like("indentityCard", keyword, MatchMode.ANYWHERE))
+                    .add(Restrictions.like("address", keyword, MatchMode.ANYWHERE)));
+            houseHoldList = criteria.list();
+            transaction.commit();
+        } catch (HibernateException e) {
+            if (transaction != null) transaction.rollback();
+            e.printStackTrace();
+        } finally {
+            session.close();
+        }
+        return houseHoldList;
+    }
+
+    public List<Business> findBusinessCustomer(String keyword) {
+        Long id = -1L;
+        List<Business> businessList = new ArrayList<>();
+        Session session = HibernateUtil.getSessionFactory().openSession();
+        Transaction transaction = null;
+        try {
+            transaction = session.beginTransaction();
+            Criteria criteria = session.createCriteria(Business.class);
+            try {
+                id = Long.valueOf(keyword);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+            criteria.add(Restrictions.disjunction()
+                    .add(Restrictions.like("name", keyword, MatchMode.ANYWHERE))
+                    .add(Restrictions.like("phoneNumber", keyword, MatchMode.ANYWHERE))
+                    .add(Restrictions.eq("id", id))
+                    .add(Restrictions.like("taxCode", keyword, MatchMode.ANYWHERE))
+                    .add(Restrictions.like("address", keyword, MatchMode.ANYWHERE)));
+            businessList = criteria.list();
+            transaction.commit();
+        } catch (HibernateException e) {
+            if (transaction != null) transaction.rollback();
+            e.printStackTrace();
+        } finally {
+            session.close();
+        }
+        return businessList;
     }
 
 }

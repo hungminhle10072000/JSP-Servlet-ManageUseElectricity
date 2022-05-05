@@ -1,13 +1,14 @@
 package com.hdh.daos;
 
 
-import com.hdh.models.Customer;
 import com.hdh.models.FormUse;
 import com.hdh.utils.HibernateUtil;
 import org.hibernate.Criteria;
 import org.hibernate.HibernateException;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
+import org.hibernate.criterion.MatchMode;
+import org.hibernate.criterion.Restrictions;
 import org.hibernate.query.Query;
 
 import java.util.ArrayList;
@@ -108,4 +109,39 @@ public class FormUseDao {
             session.close();
         }
     }
+
+    public List<FormUse> findFormUse(String keyWord) {
+        Integer id = -1;
+        Double unitPrice = -1.0;
+        List<FormUse> formUseList;
+        Session session = HibernateUtil.getSessionFactory().openSession();
+        Transaction transaction = null;
+        try {
+            transaction = session.beginTransaction();
+            Criteria criteria = session.createCriteria(FormUse.class);
+            try {
+                id = Integer.valueOf(keyWord);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+            try {
+                unitPrice = Double.valueOf(keyWord);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+            criteria.add(Restrictions.disjunction().add(Restrictions.like("nameForm", keyWord, MatchMode.ANYWHERE))
+                    .add(Restrictions.eq("id", id))
+                    .add(Restrictions.eq("unitPrice", unitPrice)));
+            formUseList = criteria.list();
+            transaction.commit();
+        } catch (HibernateException e) {
+            if (transaction != null) transaction.rollback();
+            e.printStackTrace();
+            return null;
+        } finally {
+            session.close();
+        }
+        return formUseList;
+    }
+
 }

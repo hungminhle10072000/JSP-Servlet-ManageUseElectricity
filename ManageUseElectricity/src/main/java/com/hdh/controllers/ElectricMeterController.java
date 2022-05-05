@@ -34,7 +34,15 @@ public class ElectricMeterController extends HttpServlet {
             request.setAttribute("contractList", contractList);
             requestDispatcher = request.getRequestDispatcher("/views/view_electricmeter/detail_electricmeter_page.jsp");
         } else {
-            List<ElectricMeter> electricMeterList = electricMeterService.getAllElectricMeter();
+            List<ElectricMeter> electricMeterList;
+            String keyWord = request.getParameter("keyWord");
+
+            if (keyWord != null) {
+                electricMeterList = electricMeterService.findElectric(keyWord);
+            } else {
+                electricMeterList = electricMeterService.getAllElectricMeter();
+            }
+            request.setAttribute("keyWord", keyWord);
             request.setAttribute("electricMeterList", electricMeterList);
             requestDispatcher = request.getRequestDispatcher("/views/view_electricmeter/manage_electricmeter_page.jsp");
         }

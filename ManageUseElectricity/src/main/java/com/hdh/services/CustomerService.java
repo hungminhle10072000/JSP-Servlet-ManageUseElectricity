@@ -54,4 +54,12 @@ public class CustomerService {
     public List<Customer> findCustomer(String keyword) {
         return customerDao.findCustomer(keyword);
     }
+
+    public List<HouseHold> findHouseHoldCustomer(String keyword) {
+        return customerDao.findHouseHoldCustomer(keyword);
+    }
+
+    public List<Business> findBusinessCustomer(String keyword) {
+        return customerDao.findBusinessCustomer(keyword);
+    }
 }

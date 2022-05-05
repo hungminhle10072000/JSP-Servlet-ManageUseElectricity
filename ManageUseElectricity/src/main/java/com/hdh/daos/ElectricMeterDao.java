@@ -3,11 +3,13 @@ package com.hdh.daos;
 import com.hdh.models.Business;
 import com.hdh.models.Contract;
 import com.hdh.models.ElectricMeter;
+import com.hdh.models.FormUse;
 import com.hdh.utils.HibernateUtil;
 import org.hibernate.Criteria;
 import org.hibernate.HibernateException;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
+import org.hibernate.criterion.MatchMode;
 import org.hibernate.criterion.Restrictions;
 import org.hibernate.query.Query;
 
@@ -129,6 +131,37 @@ public class ElectricMeterDao {
             session.close();
         }
         return checkUpdate;
+    }
+
+
+    public List<ElectricMeter> findElectricMeter(String keyWord) {
+        Long id = -1L;
+        List<ElectricMeter> electricMeterList = new ArrayList<>();
+        Session session = HibernateUtil.getSessionFactory().openSession();
+        Transaction transaction = null;
+        try {
+            transaction = session.beginTransaction();
+            Criteria criteria = session.createCriteria(ElectricMeter.class);
+            try {
+                id = Long.valueOf(keyWord);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+            criteria.add(
+                    Restrictions.disjunction()
+                            .add(Restrictions.eq("id", id))
+                            .add(Restrictions.eq("contract.id", id))
+                            .add(Restrictions.like("typeElectricMeter", keyWord, MatchMode.ANYWHERE)));
+            electricMeterList = criteria.list();
+            transaction.commit();
+        } catch (HibernateException e) {
+            if (transaction != null) transaction.rollback();
+            e.printStackTrace();
+            return null;
+        } finally {
+            session.close();
+        }
+        return electricMeterList;
     }
 
 }

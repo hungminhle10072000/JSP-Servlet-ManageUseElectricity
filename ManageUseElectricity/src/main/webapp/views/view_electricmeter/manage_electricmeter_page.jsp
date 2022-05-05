@@ -81,7 +81,9 @@
 <main>
     <h1 class="banner">Manage Electric Meter</h1>
 
-    <input type="text" placeholder="Search.." id="searchBar">
+    <input type="text" value="${keyWord}" placeholder="Search.." id="searchBar">
+
+    <button class="button-add btn-search" style="margin-bottom: 1rem; width: fit-content">Search</button>
 
     <div>
         <table id="electrics" class="table-custom">
@@ -142,6 +144,11 @@
         $("#electrics").on('click', '.btn-detail-electric', function () {
             let idDetail = $(this).attr("id-electric-detail");
             window.location.assign('${pageContext.request.contextPath}/ElectricMeterController?typePage=detailElectricPage&idDetail=' + idDetail);
+        })
+
+        $(".btn-search").on('click', function () {
+            let keyWord = $("#searchBar").val();
+            window.location.assign('${pageContext.request.contextPath}/ElectricMeterController?keyWord=' + keyWord);
         })
     })
 </script>

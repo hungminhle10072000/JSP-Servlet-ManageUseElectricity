@@ -96,7 +96,7 @@
 <main>
     <h1 class="banner">Manage Customer</h1>
 
-    <input type="text" placeholder="Enter keyword....." id="searchBar">
+    <input type="text" placeholder="Enter keyword....." id="searchBar" value="${keyWord}">
 
     <button class="button-add btn-search" style="margin-bottom: 1rem; width: fit-content">Search</button>
 

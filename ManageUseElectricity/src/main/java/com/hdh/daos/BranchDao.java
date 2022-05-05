@@ -109,6 +109,7 @@ public class BranchDao {
     }
 
     public List<Branch> findBranch(String keyword) {
+        Integer id = -1;
         List<Branch> branchList;
         Session session = HibernateUtil.getSessionFactory().openSession();
         Transaction transaction = null;
@@ -116,15 +117,14 @@ public class BranchDao {
             transaction = session.beginTransaction();
             Criteria criteria = session.createCriteria(Branch.class);
             try {
-                Integer id = Integer.valueOf(keyword);
-                criteria.add(Restrictions.eq("id", id));
-                branchList = criteria.list();
+                id = Integer.valueOf(keyword);
             } catch (Exception e) {
                 e.printStackTrace();
-                criteria.add(Restrictions.disjunction().add(Restrictions.like("address", keyword, MatchMode.ANYWHERE))
-                        .add(Restrictions.like("nameBranch", keyword, MatchMode.ANYWHERE)));
-                branchList = criteria.list();
             }
+            criteria.add(Restrictions.disjunction().add(Restrictions.like("address", keyword, MatchMode.ANYWHERE))
+                    .add(Restrictions.eq("id", id))
+                    .add(Restrictions.like("nameBranch", keyword, MatchMode.ANYWHERE)));
+            branchList = criteria.list();
             transaction.commit();
         } catch (HibernateException e) {
             if (transaction != null) transaction.rollback();

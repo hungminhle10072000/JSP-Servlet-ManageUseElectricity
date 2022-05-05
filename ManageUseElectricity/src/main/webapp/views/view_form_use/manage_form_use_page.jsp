@@ -69,7 +69,9 @@
 <main>
     <h1 class="banner">Manage Form Use</h1>
 
-    <input type="text" placeholder="Search.." id="searchBar">
+    <input type="text" value="${keyWord}" placeholder="Search.." id="searchBar">
+
+    <button class="button-add btn-search" style="margin-bottom: 1rem; width: fit-content">Search</button>
 
     <div>
         <table id="formUses" class="table-custom">
@@ -124,6 +126,11 @@
 <script type="text/javascript">
 
     $(document).ready(function () {
+
+        $(".btn-search").on('click', function () {
+            let keyWord = $("#searchBar").val();
+            window.location.assign('${pageContext.request.contextPath}/FormUseController?keyWord=' + keyWord);
+        })
 
         $("#formUses").on('click', '.action-delete-form-use', function () {
 

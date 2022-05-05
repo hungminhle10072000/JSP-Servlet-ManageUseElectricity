@@ -1,6 +1,7 @@
 package com.hdh.daos;
 
 
+import com.hdh.models.Branch;
 import com.hdh.models.Contract;
 import com.hdh.models.ElectricMeter;
 import com.hdh.utils.HibernateUtil;
@@ -8,6 +9,8 @@ import org.hibernate.Criteria;
 import org.hibernate.HibernateException;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
+import org.hibernate.criterion.MatchMode;
+import org.hibernate.criterion.Restrictions;
 import org.hibernate.query.Query;
 
 import java.util.ArrayList;
@@ -133,5 +136,40 @@ public class ContractDao {
             session.close();
         }
         return contract;
+    }
+
+    public List<Contract> findContract(String keyword) {
+        Long id = -1L;
+        List<Contract> contractList;
+        Session session = HibernateUtil.getSessionFactory().openSession();
+        Transaction transaction = null;
+        try {
+            transaction = session.beginTransaction();
+            Criteria criteria = session.createCriteria(Contract.class)
+                    .createAlias("customer", "c")
+                    .createAlias("formUse", "f")
+                    .createAlias("branch", "b");
+            try {
+                id = Long.valueOf(keyword);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+            criteria.add(
+                    Restrictions.disjunction()
+                            .add(Restrictions.eq("id", id))
+                            .add(Restrictions.eq("c.name", keyword))
+                            .add(Restrictions.eq("b.nameBranch", keyword))
+                            .add(Restrictions.eq("f.nameForm", keyword))
+                            .add(Restrictions.like("content", keyword, MatchMode.ANYWHERE)));
+            contractList = criteria.list();
+            transaction.commit();
+        } catch (HibernateException e) {
+            if (transaction != null) transaction.rollback();
+            e.printStackTrace();
+            return null;
+        } finally {
+            session.close();
+        }
+        return contractList;
     }
 }

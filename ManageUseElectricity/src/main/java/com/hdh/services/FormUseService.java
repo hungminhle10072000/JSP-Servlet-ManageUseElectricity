@@ -32,4 +32,8 @@ public class FormUseService {
     public FormUse findFormUseById(Integer id) {
         return formUseDao.findFormUseById(id);
     }
+
+    public List<FormUse> findFormUse(String keyWord) {
+        return formUseDao.findFormUse(keyWord);
+    }
 }

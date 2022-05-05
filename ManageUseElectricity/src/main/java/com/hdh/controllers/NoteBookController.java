@@ -1,8 +1,10 @@
 package com.hdh.controllers;
 
 import com.google.gson.JsonObject;
+import com.hdh.models.Customer;
 import com.hdh.models.ElectricMeter;
 import com.hdh.models.NoteBook;
+import com.hdh.services.CustomerService;
 import com.hdh.services.ElectricMeterService;
 import com.hdh.services.NoteBookService;
 
@@ -21,6 +23,8 @@ public class NoteBookController extends HttpServlet {
 
     private final ElectricMeterService electricMeterService = new ElectricMeterService();
     private final NoteBookService noteBookService = new NoteBookService();
+
+    private final CustomerService customerService = new CustomerService();
 
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
@@ -41,9 +45,27 @@ public class NoteBookController extends HttpServlet {
             requestDispatcher = request.getRequestDispatcher("/views/view_notebook/detail_notebook_page.jsp");
             requestDispatcher.forward(request, response);
 
+        } else if (request.getParameter("searchForm") != null) {
+            List<Customer> customerList = customerService.getAllCustomer();
+            int monthFind = Integer.parseInt(request.getParameter("monthFind"));
+            int yearFind = Integer.parseInt(request.getParameter("yearFind"));
+            Long idFind = 0L;
+            if (request.getParameter("selectCustomer") != null) {
+                idFind = Long.valueOf(request.getParameter("selectCustomer"));
+            }
+            List<NoteBook> noteBookList = noteBookService.findNoteBook(monthFind, yearFind, idFind);
+            request.setAttribute("monthFind", monthFind);
+            request.setAttribute("yearFind", yearFind);
+            request.setAttribute("idFind", idFind);
+            request.setAttribute("noteBookList", noteBookList);
+            request.setAttribute("customerList", customerList);
+            requestDispatcher = request.getRequestDispatcher("/views/view_notebook/manage_notebook_page.jsp");
+            requestDispatcher.forward(request, response);
         } else {
+            List<Customer> customerList = customerService.getAllCustomer();
             List<NoteBook> noteBookList = noteBookService.getAllNoteBook();
             request.setAttribute("noteBookList", noteBookList);
+            request.setAttribute("customerList", customerList);
             requestDispatcher = request.getRequestDispatcher("/views/view_notebook/manage_notebook_page.jsp");
             requestDispatcher.forward(request, response);
 

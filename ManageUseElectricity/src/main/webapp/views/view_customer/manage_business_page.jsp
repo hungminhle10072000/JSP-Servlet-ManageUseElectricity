@@ -96,9 +96,9 @@
 <main>
     <h1 class="banner">Manage Business Customer</h1>
 
-    <input type="text" placeholder="Enter keyword....." id="searchBar">
+    <input type="text" placeholder="Enter keyword....." id="searchBar" value="${keyWord}">
 
-    <button class="button-add" style="margin-bottom: 1rem; width: fit-content">Search</button>
+    <button class="button-add btn-search" style="margin-bottom: 1rem; width: fit-content">Search</button>
 
     <div>
         <table id="customers" class="table-custom">
@@ -152,6 +152,11 @@
 <script type="text/javascript">
 
     $(document).ready(function () {
+
+        $(".btn-search").on('click', function () {
+            let keyWord = $("#searchBar").val();
+            window.location.assign('${pageContext.request.contextPath}/BusinessCustomerController?keyWord=' + keyWord);
+        })
 
         $("#customers").on('click', '.btn-delete-business', function () {
 

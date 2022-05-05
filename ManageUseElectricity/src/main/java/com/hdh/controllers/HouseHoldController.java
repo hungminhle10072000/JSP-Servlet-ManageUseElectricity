@@ -3,6 +3,7 @@ package com.hdh.controllers;
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
 import com.hdh.models.Business;
+import com.hdh.models.Customer;
 import com.hdh.models.HouseHold;
 import com.hdh.services.CustomerService;
 
@@ -12,6 +13,7 @@ import javax.servlet.annotation.*;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.List;
 
 @WebServlet(name = "HouseHoldController", value = "/HouseHoldController")
 public class HouseHoldController extends HttpServlet {
@@ -20,7 +22,15 @@ public class HouseHoldController extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        request.setAttribute("listHouseHoldCustomer", customerService.getAllHouseHoldCustomer());
+        List<HouseHold> houseHoldList;
+        String keyWord = request.getParameter("keyWord");
+        if (keyWord != null) {
+            houseHoldList = customerService.findHouseHoldCustomer(keyWord);
+        } else {
+            houseHoldList = customerService.getAllHouseHoldCustomer();
+        }
+        request.setAttribute("keyWord", keyWord);
+        request.setAttribute("listHouseHoldCustomer", houseHoldList);
         RequestDispatcher requestDispatcher = request.getRequestDispatcher("/views/view_customer/manage_household_page.jsp");
         requestDispatcher.forward(request, response);
     }

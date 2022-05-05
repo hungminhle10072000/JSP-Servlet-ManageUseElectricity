@@ -96,9 +96,9 @@
 <main>
     <h1 class="banner">Manage HouseHold Customer</h1>
 
-    <input type="text" placeholder="Enter keyword....." id="searchBar">
+    <input type="text" placeholder="Enter keyword....." id="searchBar" value="${keyWord}">
 
-    <button class="button-add" style="margin-bottom: 1rem; width: fit-content">Search</button>
+    <button class="button-add btn-search" style="margin-bottom: 1rem; width: fit-content">Search</button>
 
     <div>
         <table id="customers" class="table-custom">
@@ -230,6 +230,11 @@
                     }
                 })
             }
+        })
+
+        $(".btn-search").on('click', function () {
+            let keyWord = $("#searchBar").val();
+            window.location.assign('${pageContext.request.contextPath}/HouseHoldController?keyWord=' + keyWord);
         })
     })
 

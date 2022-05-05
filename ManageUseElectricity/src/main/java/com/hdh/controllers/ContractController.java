@@ -51,7 +51,15 @@ public class ContractController extends HttpServlet {
             request.setAttribute("contractDetail", contractDetail);
             requestDispatcher = request.getRequestDispatcher("/views/view_contract/detail_contract_page.jsp");
         } else {
-            List<Contract> contractList = contractService.getAllContract();
+            List<Contract> contractList;
+            String keyWord = request.getParameter("keyWord");
+
+            if (keyWord != null) {
+                contractList = contractService.findContract(keyWord);
+            } else {
+                contractList = contractService.getAllContract();
+            }
+            request.setAttribute("keyWord", keyWord);
             request.setAttribute("contractList", contractList);
             requestDispatcher = request.getRequestDispatcher("/views/view_contract/manage_contract_page.jsp");
         }
