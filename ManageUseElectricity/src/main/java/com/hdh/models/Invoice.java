@@ -1,10 +1,13 @@
 package com.hdh.models;
 
+import lombok.Data;
+
 import javax.persistence.*;
 import java.util.Date;
 
 @Entity
 @Table
+@Data
 public class Invoice {
 
     @Id
@@ -21,8 +24,8 @@ public class Invoice {
 
     private Double totalIndex;
 
-    @OneToOne
-    @JoinColumn(name = "notebook_id", nullable = false)
-    private NoteBook noteBook;
+    @ManyToOne
+    @JoinColumn(name = "electric_id", nullable = false)
+    private ElectricMeter electricMeter;
 
 }

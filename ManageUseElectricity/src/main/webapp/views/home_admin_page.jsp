@@ -90,7 +90,7 @@
                 </a>
             </li>
             <li class="tooltip-element" data-tooltip="7">
-                <a href="#" data-active="7">
+                <a href="${pageContext.request.contextPath}/InvoiceController" data-active="7">
                     <div class="icon">
                         <i class='bx bx-bar-chart-square'></i>
                         <i class='bx bxs-bar-chart-square'></i>

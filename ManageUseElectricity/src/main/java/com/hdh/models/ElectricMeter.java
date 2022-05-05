@@ -24,4 +24,7 @@ public class ElectricMeter {
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "electricMeter", cascade = CascadeType.ALL)
     private List<NoteBook> noteBookList;
 
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "electricMeter", cascade = CascadeType.ALL)
+    private List<Invoice> invoiceList;
+
 }
