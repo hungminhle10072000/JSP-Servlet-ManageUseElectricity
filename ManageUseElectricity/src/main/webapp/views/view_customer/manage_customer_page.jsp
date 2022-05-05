@@ -98,7 +98,7 @@
 
     <input type="text" placeholder="Enter keyword....." id="searchBar">
 
-    <button class="button-add" style="margin-bottom: 1rem; width: fit-content">Search</button>
+    <button class="button-add btn-search" style="margin-bottom: 1rem; width: fit-content">Search</button>
 
     <div>
         <table id="customers" class="table-custom">
@@ -139,5 +139,13 @@
     </div>
 </main>
 <script src="${pageContext.request.contextPath}/resources/js/js_home_page.js"></script>
+<script type="text/javascript">
+    $(document).ready(function (){
+        $(".btn-search").on('click', function () {
+            let keyWord = $("#searchBar").val();
+            window.location.assign('${pageContext.request.contextPath}/CustomerController?keyWord=' + keyWord);
+        })
+    })
+</script>
 </body>
 </html>

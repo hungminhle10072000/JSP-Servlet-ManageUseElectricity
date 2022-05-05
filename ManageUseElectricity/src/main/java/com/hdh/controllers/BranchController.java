@@ -31,6 +31,7 @@ public class BranchController extends HttpServlet {
         } else {
             branchList = branchService.listBranches();
         }
+        request.setAttribute("keyWord", keyWord);
         request.setAttribute("branchList", branchList);
         RequestDispatcher requestDispatcher = request.getRequestDispatcher("/views/view_branch/manage_branch_page.jsp");
         requestDispatcher.forward(request, response);

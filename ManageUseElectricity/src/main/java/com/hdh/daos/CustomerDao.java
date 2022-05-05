@@ -6,6 +6,7 @@ import org.hibernate.Criteria;
 import org.hibernate.HibernateException;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
+import org.hibernate.criterion.MatchMode;
 import org.hibernate.criterion.Restrictions;
 import org.hibernate.query.Query;
 
@@ -215,6 +216,44 @@ public class CustomerDao {
             session.close();
         }
         return checkDelete;
+    }
+
+    public List<Customer> findCustomer(String keyword) {
+        Long id = -1L;
+        boolean checkConvertId = false;
+        List<Customer> customerList = new ArrayList<>();
+        Session session = HibernateUtil.getSessionFactory().openSession();
+        Transaction transaction = null;
+        try {
+            transaction = session.beginTransaction();
+            Criteria criteria = session.createCriteria(Customer.class);
+            try {
+                id = Long.valueOf(keyword);
+                checkConvertId = true;
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+            if (checkConvertId) {
+                criteria.add(Restrictions.disjunction()
+                        .add(Restrictions.like("name", keyword, MatchMode.ANYWHERE))
+                        .add(Restrictions.like("phoneNumber", keyword, MatchMode.ANYWHERE))
+                        .add(Restrictions.eq("id", id))
+                        .add(Restrictions.like("address", keyword, MatchMode.ANYWHERE)));
+            } else {
+                criteria.add(Restrictions.disjunction()
+                        .add(Restrictions.like("name", keyword, MatchMode.ANYWHERE))
+                        .add(Restrictions.like("phoneNumber", keyword, MatchMode.ANYWHERE))
+                        .add(Restrictions.like("address", keyword, MatchMode.ANYWHERE)));
+            }
+            customerList = criteria.list();
+            transaction.commit();
+        } catch (HibernateException e) {
+            if (transaction != null) transaction.rollback();
+            e.printStackTrace();
+        } finally {
+            session.close();
+        }
+        return customerList;
     }
 
 }

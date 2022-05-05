@@ -69,7 +69,7 @@
 <main>
     <h1 class="banner">Manage Branch</h1>
 
-    <input type="text" placeholder="Search.." id="searchBar">
+    <input type="text" value="${keyWord}" placeholder="Search.." id="searchBar">
 
     <button class="button-add btn-search" style="margin-bottom: 1rem; width: fit-content">Search</button>
 

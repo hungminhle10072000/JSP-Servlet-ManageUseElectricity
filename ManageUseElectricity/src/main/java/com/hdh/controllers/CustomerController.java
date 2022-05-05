@@ -19,9 +19,15 @@ public class CustomerController extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
-        List<Customer> customerList = customerService.getAllCustomer();
+        List<Customer> customerList;
+        String keyWord = request.getParameter("keyWord");
+        if (keyWord != null) {
+            customerList = customerService.findCustomer(keyWord);
+        } else {
+            customerList = customerService.getAllCustomer();
+        }
+        request.setAttribute("keyWord", keyWord);
         request.setAttribute("customerList", customerList);
-
         RequestDispatcher requestDispatcher = request.getRequestDispatcher("/views/view_customer/manage_customer_page.jsp");
         requestDispatcher.forward(request, response);
     }

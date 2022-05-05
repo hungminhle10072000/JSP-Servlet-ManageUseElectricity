@@ -50,4 +50,8 @@ public class CustomerService {
     public Customer findCustomerById(Long id) {
         return customerDao.findCustomerById(id);
     }
+
+    public List<Customer> findCustomer(String keyword) {
+        return customerDao.findCustomer(keyword);
+    }
 }
