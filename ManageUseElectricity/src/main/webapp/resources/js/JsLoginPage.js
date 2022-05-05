@@ -6,6 +6,7 @@ $('.login').on('submit', function (e) {
     if (valueUsername == "" || valuePassWord == "") {
         alert("Request enter username and password !!!!");
     } else {
-        window.location.href = $("span").attr("urlBase") + "/views/home_admin_page.jsp";
+        // window.location.href = $("span").attr("urlBase") + "/views/home_admin_page.jsp";
+        window.location.assign($("span").attr("urlBase") + "/HomeController");
     }
 });

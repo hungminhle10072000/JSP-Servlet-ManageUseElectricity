@@ -62,4 +62,8 @@ public class CustomerService {
     public List<Business> findBusinessCustomer(String keyword) {
         return customerDao.findBusinessCustomer(keyword);
     }
+
+    public List<Object> findDetailCustomer(Long idCustomer) {
+        return customerDao.findDetailCustomer(idCustomer);
+    }
 }

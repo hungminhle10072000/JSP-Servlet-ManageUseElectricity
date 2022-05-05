@@ -52,7 +52,7 @@
                 </a>
             </li>
             <li class="tooltip-element" data-tooltip="2">
-                <a href="${pageContext.request.contextPath}/views/home_admin_page.jsp" data-active="2">
+                <a href="${pageContext.request.contextPath}/HomeController" data-active="2">
                     <div class="icon">
                         <i class='bx bx-folder'></i>
                         <i class='bx bxs-folder'></i>

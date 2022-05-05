@@ -37,7 +37,7 @@
                 </a>
             </li>
             <li class="tooltip-element" data-tooltip="1">
-                <a href="${pageContext.request.contextPath}/views/home_admin_page.jsp" data-active="1">
+                <a href="${pageContext.request.contextPath}/HomeController" data-active="1">
                     <div class="icon">
                         <i class='bx bx-folder'></i>
                         <i class='bx bxs-folder'></i>
@@ -97,7 +97,7 @@
                             </td>
                             <td>
                                 <button class="button-update action-update-branch" id-branch-update="${branch.getId()}">
-                                    Update
+                                    Detail
                                 </button>
                                 <button class="button-delete action-delete-branch" id-branch-delete="${branch.getId()}">
                                     Delete

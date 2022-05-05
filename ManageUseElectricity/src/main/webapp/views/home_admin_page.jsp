@@ -1,11 +1,20 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ page import="java.util.*" %>
+<%@ page import="com.google.gson.Gson" %>
+<%@ page import="com.google.gson.JsonObject" %>
+<%
+    HttpSession data = request.getSession();
+    String dataPoints = (String) data.getAttribute("dataPoints");
+%>
 <html>
 <head>
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
     <title>Dashboard</title>
     <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/font-awesome.min.css"/>
     <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/css_home_page.css">
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/table.css"/>
 </head>
 
 <body>
@@ -126,7 +135,47 @@
     </div>
 </nav>
 <main>
-    <h1 class="banner">Manage Use Electricity</h1>
+    <h1 class="banner">Statistical</h1>
+
+    <form action="${pageContext.request.contextPath}/HomeController" method="get">
+        <div style="display: inline; width: 50%">
+            <div>
+                <label for="yearFind">Year: </label>
+                <input style="width: 30% !important; height: 2rem !important;" value="${year}" required type="number" id="yearFind" name="yearFind" min="2000"
+                       max="<%= new java.util.Date().getYear() + 1900%>"/>
+            </div>
+        </div>
+
+<%--        <button class="button-add" style="margin-bottom: 1rem; width: fit-content">Search</button>--%>
+        <button class="button-add action-add-branch">Search</button>
+    </form>
+
+    <div id="chartContainer"></div>
+
+    <script src="https://canvasjs.com/assets/script/canvasjs.min.js"></script>
+    <script type="text/javascript">
+        window.onload = function () {
+            var chart = new CanvasJS.Chart("chartContainer", {
+                theme: "light2",
+                title: {
+                    text: "Statistics of electricity use by month of year : ${year}"
+                },
+                axisX: {
+                    title: "Month"
+                },
+                axisY: {
+                    title: "Consumption index (Kwh)",
+                    includeZero: true
+                },
+                data: [{
+                    type: "line",
+                    yValueFormatString: " #,##0",
+                    dataPoints: <%out.print(dataPoints);%>
+                }]
+            });
+            chart.render();
+        }
+    </script>
 </main>
 <script src="${pageContext.request.contextPath}/resources/js/js_home_page.js"></script>
 </body>

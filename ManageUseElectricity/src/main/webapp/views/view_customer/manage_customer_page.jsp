@@ -64,7 +64,7 @@
                 </a>
             </li>
             <li class="tooltip-element" data-tooltip="4">
-                <a href="${pageContext.request.contextPath}/views/home_admin_page.jsp" data-active="4">
+                <a href="${pageContext.request.contextPath}/HomeController" data-active="4">
                     <div class="icon">
                         <i class='bx bx-folder'></i>
                         <i class='bx bxs-folder'></i>
@@ -127,7 +127,7 @@
                             <td>${customer.getName()}</td>
                             <td>${customer.getPhoneNumber()}</td>
                             <td>
-                                <button class="button-update">
+                                <button class="button-update action-detail-customer" id-custmer="${customer.getId()}">
                                     Detail
                                 </button>
                             </td>
@@ -140,7 +140,13 @@
 </main>
 <script src="${pageContext.request.contextPath}/resources/js/js_home_page.js"></script>
 <script type="text/javascript">
-    $(document).ready(function (){
+    $(document).ready(function () {
+
+        $("#customers").on('click', '.action-detail-customer', function () {
+            let idDetail = $(this).attr("id-custmer");
+            window.location.assign("${pageContext.request.contextPath}/CustomerController?detailCustomer=" + idDetail);
+        })
+
         $(".btn-search").on('click', function () {
             let keyWord = $("#searchBar").val();
             window.location.assign('${pageContext.request.contextPath}/CustomerController?keyWord=' + keyWord);

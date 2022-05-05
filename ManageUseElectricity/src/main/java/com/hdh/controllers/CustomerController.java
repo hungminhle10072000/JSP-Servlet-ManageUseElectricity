@@ -18,7 +18,21 @@ public class CustomerController extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-
+        RequestDispatcher requestDispatcher = request.getRequestDispatcher("/views/view_customer/manage_customer_page.jsp");
+        if (request.getParameter("detailCustomer") != null) {
+            Long idCustomerDetail = Long.valueOf(request.getParameter("detailCustomer"));
+            List<Object> objectList = customerService.findDetailCustomer(idCustomerDetail);
+            if (objectList.get(0) instanceof HouseHold) {
+                request.setAttribute("listHouseHoldCustomer", objectList);
+                requestDispatcher = request.getRequestDispatcher("/views/view_customer/manage_household_page.jsp");
+            }
+            if (objectList.get(0) instanceof Business) {
+                request.setAttribute("listBusinessCustomer", objectList);
+                requestDispatcher = request.getRequestDispatcher("/views/view_customer/manage_business_page.jsp");
+            }
+            requestDispatcher.forward(request, response);
+            return;
+        }
         List<Customer> customerList;
         String keyWord = request.getParameter("keyWord");
         if (keyWord != null) {
@@ -28,7 +42,6 @@ public class CustomerController extends HttpServlet {
         }
         request.setAttribute("keyWord", keyWord);
         request.setAttribute("customerList", customerList);
-        RequestDispatcher requestDispatcher = request.getRequestDispatcher("/views/view_customer/manage_customer_page.jsp");
         requestDispatcher.forward(request, response);
     }
 

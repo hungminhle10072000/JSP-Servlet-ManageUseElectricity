@@ -307,4 +307,19 @@ public class CustomerDao {
         return businessList;
     }
 
+    public List<Object> findDetailCustomer(Long id) {
+        Session session = HibernateUtil.getSessionFactory().openSession();
+        Query queryHouseHold = session.createQuery("from HouseHold where id = :id");
+        Query queryBusiness = session.createQuery("from Business where id = :id");
+        queryHouseHold.setParameter("id", id);
+        queryBusiness.setParameter("id", id);
+        if (queryHouseHold.list().size() > 0) {
+            return queryHouseHold.list();
+        }
+        if (queryBusiness.list().size() > 0) {
+            return queryBusiness.list();
+        }
+        return null;
+    }
+
 }

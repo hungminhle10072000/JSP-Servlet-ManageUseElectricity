@@ -28,4 +28,7 @@ public class Invoice {
     @JoinColumn(name = "electric_id", nullable = false)
     private ElectricMeter electricMeter;
 
+    public boolean isStatusPaid() {
+        return statusPaid;
+    }
 }

@@ -1,5 +1,8 @@
+<%@ page import="java.text.DecimalFormat" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
 <html>
 <head>
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -45,17 +48,17 @@
                     <span class="link hide">Export Invoice</span>
                 </a>
             </li>
-            <li class="tooltip-element" data-tooltip="3">
-                <a href="#" data-active="3">
-                    <div class="icon">
-                        <i class='bx bx-folder'></i>
-                        <i class='bx bxs-folder'></i>
-                    </div>
-                    <span class="link hide">Update Status</span>
-                </a>
-            </li>
+            <%--            <li class="tooltip-element" data-tooltip="3">--%>
+            <%--                <a href="#" data-active="3">--%>
+            <%--                    <div class="icon">--%>
+            <%--                        <i class='bx bx-folder'></i>--%>
+            <%--                        <i class='bx bxs-folder'></i>--%>
+            <%--                    </div>--%>
+            <%--                    <span class="link hide">Update Status</span>--%>
+            <%--                </a>--%>
+            <%--            </li>--%>
             <li class="tooltip-element" data-tooltip="4">
-                <a href="${pageContext.request.contextPath}/views/home_admin_page.jsp" data-active="4">
+                <a href="${pageContext.request.contextPath}/HomeController" data-active="4">
                     <div class="icon">
                         <i class='bx bx-folder'></i>
                         <i class='bx bxs-folder'></i>
@@ -91,8 +94,7 @@
         <h1 style="color: red">${alert}</h1>
     </c:if>
 
-    <form action="${pageContext.request.contextPath}/NoteBookController" method="get">
-        <input hidden id="searchForm" name="searchForm"/>
+    <form action="${pageContext.request.contextPath}/InvoiceController" method="get">
         <div style="display: inline; width: 50%">
             <div>
                 <label for="monthFind">Month</label>
@@ -132,37 +134,45 @@
                 <th>End Date</th>
                 <th>Status</th>
                 <th>Total Index</th>
+                <th>Total money</th>
                 <th>Electric</th>
                 <th></th>
             </tr>
             <c:if test="${invoiceList.size() > 0}">
                 <c:forEach items="${invoiceList}" var="invoice">
                     <tr>
-<%--                        <td>${contract.getId()}</td>--%>
-<%--                        <td>--%>
-<%--                                ${contract.getContent()}--%>
-<%--                        </td>--%>
-<%--                        <td>--%>
-<%--                            <fmt:formatDate pattern="dd-MM-yyyy" value="${contract.getDateSign()}"/>--%>
-<%--                        </td>--%>
-<%--                        <td>--%>
-<%--                                ${contract.getBranch().getId()} - ${contract.getBranch().getNameBranch()}--%>
-<%--                        </td>--%>
-<%--                        <td>--%>
-<%--                                ${contract.getFormUse().getId()} - ${contract.getFormUse().getNameForm()}--%>
-<%--                        </td>--%>
-<%--                        <td>--%>
-<%--                                ${contract.getCustomer().getId()} - ${contract.getCustomer().getName()}--%>
-<%--                        </td>--%>
-<%--                        <td>--%>
-<%--                            <button--%>
-<%--                                    class="button-update btn-detail-contract" id-contract-detail="${contract.getId()}">--%>
-<%--                                Detail--%>
-<%--                            </button>--%>
-<%--                            <button class="button-delete btn-delete-contract" id-contract-delete="${contract.getId()}">--%>
-<%--                                Delete--%>
-<%--                            </button>--%>
-<%--                        </td>--%>
+                        <td>${invoice.id}</td>
+                        <td>
+                            <fmt:formatDate pattern="yyyy-MM-dd" value="${invoice.dateFrom}"/>
+                        </td>
+                        <td><fmt:formatDate pattern="yyyy-MM-dd" value="${invoice.dateEnd}"/></td>
+                        <td>
+                            <c:if test="${invoice.statusPaid == false}">UnPaid</c:if>
+                            <c:if test="${invoice.statusPaid == true}">Paided</c:if>
+                        </td>
+                        <td>${invoice.totalIndex}</td>
+                        <td>
+                            <fmt:setLocale value="vi_VN"/>
+                            <fmt:formatNumber value="${invoice.totalMoney}" type="currency"/>
+                        </td>
+                        <td>${invoice.electricMeter.id}</td>
+                        <td>
+                            <c:if test="${invoice.statusPaid == false}">
+                                <button class="button-update action-update-invoice"
+                                        id-invoice-update="${invoice.getId()}">
+                                    Update Paided
+                                </button>
+                            </c:if>
+                            <c:if test="${invoice.statusPaid == true}">
+                                <button class="button-update action-update-invoice"
+                                        id-invoice-update="${invoice.getId()}">
+                                    Update UnPaid
+                                </button>
+                            </c:if>
+                            <button class="button-delete action-delete-invoice" id-invoice-delete="${invoice.getId()}">
+                                Delete
+                            </button>
+                        </td>
                     </tr>
                 </c:forEach>
             </c:if>
@@ -172,16 +182,55 @@
 <script src="${pageContext.request.contextPath}/resources/js/js_home_page.js"></script>
 <script type="text/javascript">
     $(document).ready(function () {
-        <%--$(".btn-export-invoice").on('click', function () {--%>
-        <%--    let idCustomer = $("#selectCustomer").val();--%>
-        <%--    let monthExport = $("#monthFind").val();--%>
-        <%--    let yearExport = $("#yearFind").val();--%>
-        <%--    if (monthExport == "" || yearExport == "") {--%>
-        <%--        alert("Request enter month and year !!!!");--%>
-        <%--        return;--%>
-        <%--    }--%>
-        <%--    window.location.assign("${pageContext.request.contextPath}/InvoiceController?monthExport=" + monthExport + "&yearExport=" + yearExport + "&selectCustomer=" + idCustomer);--%>
-        <%--})--%>
+
+        $("#invoices").on('click', '.action-delete-invoice', function () {
+
+            let currentRow = $(this).closest("tr");
+            let checkConfirm = confirm("Are you sure you want to delete !!!");
+            let idDelete = $(this).attr("id-invoice-delete");
+            if (checkConfirm) {
+                $.ajax({
+                    type: "DELETE",
+                    url: '${pageContext.request.contextPath}/InvoiceController',
+                    contentType: 'application/json',
+                    data: idDelete,
+                    dataType: 'json',
+                    success: function (data) {
+                        alert("Delete success");
+                        currentRow.remove();
+                    },
+                    error: function (data) {
+                        alert("Delete failed");
+                        window.scrollTo({top: 0, behavior: 'smooth'});
+                    }
+                })
+            }
+        })
+
+        $("#invoices").on('click', '.action-update-invoice', function () {
+
+            let currentRow = $(this).closest("tr");
+            let checkConfirm = confirm("Are you sure you want update !!!");
+            let idUpdate = $(this).attr("id-invoice-update");
+            if (checkConfirm) {
+                $.ajax({
+                    type: "PUT",
+                    url: '${pageContext.request.contextPath}/InvoiceController',
+                    contentType: 'application/json',
+                    data: idUpdate,
+                    dataType: 'json',
+                    success: function (data) {
+                        alert("Update success");
+                        window.location.assign("${pageContext.request.contextPath}/InvoiceController");
+                    },
+                    error: function (data) {
+                        alert("Update failed");
+                        window.scrollTo({top: 0, behavior: 'smooth'});
+                    }
+                })
+            }
+        })
+
     })
 </script>
 </body>

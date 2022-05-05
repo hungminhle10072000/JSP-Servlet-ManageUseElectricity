@@ -37,7 +37,7 @@
                 </a>
             </li>
             <li class="tooltip-element" data-tooltip="1">
-                <a href="${pageContext.request.contextPath}/views/home_admin_page.jsp" data-active="1">
+                <a href="${pageContext.request.contextPath}/HomeController" data-active="1">
                     <div class="icon">
                         <i class='bx bx-folder'></i>
                         <i class='bx bxs-folder'></i>
