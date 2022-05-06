@@ -97,7 +97,7 @@
                             </td>
                             <td>
                                 <button class="button-update action-update-branch" id-branch-update="${branch.getId()}">
-                                    Detail
+                                    Update
                                 </button>
                                 <button class="button-delete action-delete-branch" id-branch-delete="${branch.getId()}">
                                     Delete
